@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 
-    <h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light">Darslar /</span> 2-Dars</h4>
+    <h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light">Darslar /</span> 1-Dars</h4>
     @if(session('success'))
         <div class="alert alert-success alert-dismissible" role="alert">
             <strong>Success!</strong> {{ session('success') }}
@@ -35,7 +35,7 @@
     @enderror
 
     @if(auth()->user()->can('create'))
-        <div class="modal fade mb-3" id="exLargeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -47,7 +47,7 @@
                         ></button>
                     </div>
 
-                    <form method="POST" action="{{ route('lesson-2.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('lesson-1.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="modal-body">
@@ -159,6 +159,7 @@
                     <div class="row g-0">
                         <div class="col-md-8">
                             <div class="card-body">
+                                <h5 class="card-title"></h5>
                                 <p class="card-text">
                                     {!! $lesson->homework !!}
                                 </p>
@@ -174,6 +175,7 @@
                     <div class="row g-0">
                         <div class="col-md-8">
                             <div class="card-body">
+                                <h5 class="card-title"></h5>
                                 <p class="card-text">
                                     {!! $lesson->answer !!}
                                 </p>
@@ -192,7 +194,8 @@
                             <source src="{{ asset('storage/'. $lesson->voice) }}" type="audio/mp3">
                             Your browser does not support the audio element.
                         </audio>
-                        <a href="{{ asset('storage/'. $lesson->pdf) }}" class="btn btn-primary mt-2">Faylni Yuklab Olish</a>
+                        <a href="{{ asset('storage/'. $lesson->pdf) }}" class="btn btn-primary mt-2">Faylni Yuklab
+                            Olish</a>
                     </div>
                 </div>
             </div>
@@ -206,13 +209,13 @@
                     class="container-fluid d-flex flex-md-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3">
                     <div>
                         <a href="#" target="_blank" class="footer-text fw-bolder">
-                            2-Dars
+                            1-Dars
                         </a>
                     </div>
                     <div>
                         <div class="footer-link me-3">
                             @if(auth()->user()->can('edit'))
-                                <a href="{{ route('lesson-2.edit', ['lesson_2' => $lesson->id]) }}"
+                                <a href="{{ route('lesson-1.edit', ['lesson_1' => $lesson->id]) }}"
                                    class="btn btn-warning"
                                 ><i class="bx bx-pen me-2"></i>Tahrirlash
                                 </a>
@@ -220,7 +223,7 @@
                         </div>
                         <div class="footer-link me-3">
                             @if(auth()->user()->can('delete'))
-                                <form action="{{ route('lesson-2.delete', $lesson->id) }}" method="POST"
+                                <form action="{{ route('lesson-1.delete', $lesson->id) }}" method="POST"
                                       id="form-delete">
                                     @csrf
                                     @method('DELETE')
@@ -255,7 +258,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.action = '/lesson-2/' + id;
+                    form.action = '/lesson-1/' + id;
                     form.submit()
                 }
             })
