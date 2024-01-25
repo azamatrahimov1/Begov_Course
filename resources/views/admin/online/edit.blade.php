@@ -21,10 +21,6 @@
                     <input type="file" class="form-control" name="image" value="{{ old('image', $online->image) }}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="price" class="form-label">Narx</label>
-                    <input type="text" class="form-control" name="price" value="{{ old('price', $online->price) }}">
-                </div>
-                <div class="mb-3">
                     <label for="desc" class="form-label">Answer:</label>
                     <textarea name="desc" id="tinymce" class="form-control" rows="5">{{ old('desc', $online->desc) }}</textarea>
                 </div>

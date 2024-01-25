@@ -54,13 +54,6 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="price" class="form-label">Narx</label>
-                                    <input type="text" name="price" class="form-control"
-                                           value="{{ old('price') }}"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
                                     <label for="desc" class="form-label">Tavsifi</label>
                                     <textarea name="desc" id="tinymce" class="form-control"
                                               rows="5">{{ old('desc') }}</textarea>
@@ -95,7 +88,6 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Sarlavha</th>
-                        <th scope="col">Narx</th>
                         <th scope="col">Fotosurat</th>
                         <th scope="col">Tavsifi</th>
                     </tr>
@@ -105,7 +97,6 @@
                         <tr>
                             <td>{{$offline->id}}</td>
                             <td>{{$offline->title}}</td>
-                            <td>{{$offline->price}}</td>
                             <td>
                                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                                     <li
