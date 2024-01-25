@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Models\Lesson;
+use App\Models\Like;
 use Carbon\Carbon;
 use DOMDocument;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -241,4 +243,21 @@ class LessonController extends Controller
         }
     }
 
+    public function like(Lesson $lesson)
+    {
+        $liker = auth()->user();
+
+        $liker->likes()->attach($lesson);
+
+        return redirect()->route('lessons.index')->with('success', 'Liked successfully!');
+    }
+
+    public function unlike(Lesson $lesson)
+    {
+        $liker = auth()->user();
+
+        $liker->likes()->detach($lesson);
+
+        return redirect()->route('lessons.index')->with('success', 'Liked successfully!');
+    }
 }

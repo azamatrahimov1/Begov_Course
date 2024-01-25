@@ -46,7 +46,7 @@ class UserController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        $user->assignRole('show-grammar-lesson');
+        $user->assignRole('show-grammar-lessons');
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }

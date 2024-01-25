@@ -157,12 +157,12 @@
                         <td>
                             <div class="d-flex">
                                 @if(auth()->user()->can('show-grammar-lessons'))
-                                <a href="{{ route('lessons.show', $lesson->id) }}"
-                                   class="btn btn-info me-2"><i class="bx bx-show me-2"></i></a>
+                                    <a href="{{ route('lessons.show', $lesson->id) }}"
+                                       class="btn btn-info me-2"><i class="bx bx-show"></i></a>
                                 @endif
                                 @if(auth()->user()->can('edit'))
                                     <a href="{{ route('lessons.edit', ['lesson' => $lesson->id]) }}"
-                                       class="btn btn-warning me-2"><i class="bx bx-pencil me-2"></i></a>
+                                       class="btn btn-warning me-2"><i class="bx bx-pencil"></i></a>
                                 @endif
                                 @if(auth()->user()->can('delete'))
                                     <form action="{{ route('lessons.destroy', ['lesson' => $lesson->id]) }}"
@@ -171,17 +171,30 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="button"
-                                                class="btn btn-danger"
+                                                class="btn btn-danger me-2"
                                                 onclick="delete_button({{$lesson->id}})">
                                             <i class="bx bx-trash-alt"></i>
                                         </button>
+                                    </form>
+                                @endif
+                                @if(Auth::user()->likesLesson($lesson))
+                                    <form action="{{ route('lessons.unlike', $lesson->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="bx bx-like me-2"></i>{{ $lesson->likes()->count() }}
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('lessons.like', $lesson->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="bx bx-like me-2"></i>{{ $lesson->likes()->count() }}</button>
                                     </form>
                                 @endif
                             </div>
                         </td>
                     </tr>
                 @endforeach
-
                 </tbody>
             </table>
         </div>

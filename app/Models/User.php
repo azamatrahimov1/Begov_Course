@@ -48,6 +48,13 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
+    //user_like
+    public function likes() {
+        return $this->belongsToMany(Lesson::class, 'lesson_like')->withTimestamps();
+    }
+    public function likesLesson(Lesson $lesson) {
+        return $this->likes()->where('lesson_id', $lesson->id)->exists();
+    }
     public function toSearchableArray(): array
     {
         return [
