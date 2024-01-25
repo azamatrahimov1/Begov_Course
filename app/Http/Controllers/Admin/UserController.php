@@ -12,17 +12,20 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('name', '!=', 'Dostonbek')->orderBy('id')->get();
+        $users = User::query()->where('name', '!=', 'Dostonbek')
+            ->orderBy('end_date')
+            ->when(request('search'), function ($query) {
+                $query->where('name', 'LIKE', '%' . request('search') . '%');
+                $query->Orwhere('email', 'LIKE', '%' . request('search') . '%');
+                $query->Orwhere('created_at', 'LIKE', '%' . request('search') . '%');
+                $query->Orwhere('phone_number', 'LIKE', '%' . request('search') . '%');
+                $query->Orwhere('end_date', 'LIKE', '%' . request('search') . '%');
+            })
+            ->paginate(10);
+
         $roles = Role::orderBy('name')->where('name', '!=', 'super-user')->get();
 
         return view('admin.users.index', compact('users', 'roles'));
-    }
-
-    public function create()
-    {
-        $roles = Role::orderBy('created_at')->where('name', '!=', 'super-user')->get();
-
-        return view('admin.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -43,23 +46,14 @@ class UserController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        $user->assignRole('grammar');
+        $user->assignRole('show-grammar-lesson');
 
-        return redirect()->route('user.index')->with('success', 'User created successfully');
-    }
-
-
-    public function show($id)
-    {
-
-        $users = User::find($id)->where('name', '!=', 'super-admin')->get();
-
-        return view('admin.users.show', compact('users'));
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     public function edit(User $user)
     {
-        $roles = Role::orderBy('created_at')->where('name', '!=', 'super-user')->get();
+        $roles = Role::where('name', '!=', 'super-user')->orderBy('created_at')->get();
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
@@ -80,13 +74,13 @@ class UserController extends Controller
 
         $user->syncRoles([$role->name]);
 
-        return redirect()->route('user.index')->with('success', 'User updated successfully');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('user.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }

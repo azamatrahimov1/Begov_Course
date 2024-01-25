@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMainScreenRequest;
 use App\Http\Requests\UpdateMainScreenRequest;
 use App\Models\MainScreen;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class MainScreenController extends Controller
 {
@@ -16,11 +16,6 @@ class MainScreenController extends Controller
         $mainScreens = MainScreen::all();
 
         return view('admin.MainScreen.index', compact('mainScreens'));
-    }
-
-    public function create()
-    {
-        return view('admin.MainScreen.create');
     }
 
     public function store(StoreMainScreenRequest $request)
@@ -58,10 +53,11 @@ class MainScreenController extends Controller
         try {
             $validatedData = $request->validated();
 
-            if ($request->hasFile('thumbnail')) {
-                $filename = $request->file('thumbnail')->store('admin.photos', 'public');
+            if ($request->hasFile('image')) {
+                $filename = $request->file('image')->store('images', 'public');
 
                 if ($mainScreen->image) {
+                    // Delete the old image before updating the new one
                     Storage::disk('public')->delete($mainScreen->image);
                 }
 
@@ -72,8 +68,11 @@ class MainScreenController extends Controller
 
             return redirect()->route('main-screen.index')->with('success', 'Main Screen updated successfully!');
         } catch (\Exception $e) {
-            // Handle errors
-            return redirect()->back()->with('error', 'Error updating Main Screen: ' . $e->getMessage());
+            // Log the error for debugging purposes
+            Log::error('Error updating Main Screen: ' . $e->getMessage());
+
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'Error updating Main Screen. Please check the logs for details.');
         }
     }
 

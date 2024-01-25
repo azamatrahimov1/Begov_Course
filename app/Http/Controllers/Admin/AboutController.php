@@ -70,7 +70,7 @@ class AboutController extends Controller
 
         $description = $request->desc;
         $dom = new DOMDocument();
-        $dom->loadHTML($description, 9);
+        $dom->loadHTML($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         $images = $dom->getElementsByTagName('img');
 
@@ -107,7 +107,7 @@ class AboutController extends Controller
             }
 
             $dom = new DOMDocument();
-            $dom->loadHTML($about->desc, 9);
+            $dom->loadHTML($about->desc, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             $images = $dom->getElementsByTagName('img');
 
             foreach ($images as $img) {

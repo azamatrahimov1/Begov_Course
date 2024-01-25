@@ -21,7 +21,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('assets/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/lib/owlcarousel/layouts/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/lib/owlcarousel/layout/owl.carousel.min.css') }}" rel="stylesheet">
 
 
     <!-- Customized Bootstrap Stylesheet -->
@@ -61,21 +61,24 @@
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
             <a href="#" class="navbar-brand"><h1 class="text-primary display-6">Begov</h1></a>
+            <div class="d-flex">
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn btn-primary text-primary navbar-toggler py-2 px-3">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="btn btn-primary text-primary navbar-toggler py-2 px-3 me-3">Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-primary text-primary navbar-toggler py-2 px-3">Log in</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary text-primary navbar-toggler py-2 px-3 me-4">Log In</a>
                 @endauth
             @endif
+
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars text-primary"></span>
             </button>
+            </div>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="{{ route('chapters') }}"
-                       class="nav-item nav-link @if(Route::Is('chapters')) active @endif">Home</a>
+                    <a href="{{ route('home') }}"
+                       class="nav-item nav-link @if(Route::Is('home')) active @endif">Home</a>
                     <a href="{{ route('contact.index') }}"
                        class="nav-item nav-link @if(Route::Is('contact.index')) active @endif">Contact</a>
                 </div>
@@ -83,9 +86,9 @@
                     @if (Route::has('login'))
                         <div class="justify-center">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="btn btn-primary text-white my-auto">Dashboard</a>
+                                <a href="{{ url('/dashboard') }}" class="btn bg-white text-primary my-auto">Dashboard</a>
                             @else
-                                <a href="{{ route('login') }}" class="btn btn-primary text-white my-auto">Log in</a>
+                                <a href="{{ route('login') }}" class="btn bg-white text-primary my-auto">Log In</a>
                             @endauth
                         </div>
                     @endif

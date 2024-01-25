@@ -3,10 +3,10 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Contact</h1>
+        <h1 class="text-center text-white display-6">Aloqa</h1>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"></li>
-            <li class="breadcrumb-item active text-white">Contact</li>
+            <li class="breadcrumb-item active text-white">Aloqa</li>
             <li class="breadcrumb-item"></li>
         </ol>
     </div>
@@ -19,7 +19,7 @@
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="text-center mx-auto" style="max-width: 700px;">
-                            <h1 class="text-primary">Get in touch</h1>
+                            <h1 class="text-primary">Bog'laning</h1>
                             @foreach($abouts as $about)
                                 <p class="mb-4">{!! $about->desc !!}</p>
                         </div>
@@ -36,13 +36,13 @@
                         <form action="{{ route('contact.store') }}" method="POST">
                             @csrf
 
-                            <input type="text" name="full_name" class="w-100 form-control border-0 py-3 mb-4" placeholder="Full Name">
+                            <input type="text" name="full_name" class="w-100 form-control border-0 py-3 mb-4" placeholder="To'liq Ism">
                             <input type="number" name="phone_number" class="w-100 form-control border-0 py-3 mb-4"
-                                   placeholder="Phone Number">
+                                   placeholder="Telefon Raqami">
                             <textarea name="desc" class="w-100 form-control border-0 mb-4" rows="5" cols="10"
-                                      placeholder="Your Message"></textarea>
+                                      placeholder="Xabaringiz"></textarea>
                             <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary "
-                                    type="submit">Submit
+                                    type="submit">Yuborish
                             </button>
                         </form>
                     </div>
@@ -51,7 +51,7 @@
                         <div class="d-flex p-4 rounded mb-4 bg-white">
                             <i class="fas fa-map-marker-alt fa-2x text-primary me-4"></i>
                             <div>
-                                <h4>Address</h4>
+                                <h4>Manzil</h4>
                                 <p class="mb-2">{{ $about->address }}</p>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                         <div class="d-flex p-4 rounded bg-white">
                             <i class="fa fa-phone-alt fa-2x text-primary me-4"></i>
                             <div>
-                                <h4>Telephone</h4>
+                                <h4>Telefon Raqami</h4>
                                 <p class="mb-2">{{ $about->phone_number }}</p>
                             </div>
                         </div>

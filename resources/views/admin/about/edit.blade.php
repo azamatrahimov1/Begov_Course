@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Edit</span> About US</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tahrirlash/</span> Biz Haqimizda</h4>
     @error('desc')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
@@ -22,7 +22,7 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Description</label>
+                    <label for="desc" class="form-label"></label>
                     <textarea name="desc" id="tinymce" class="form-control"
                               rows="5">{{ old('desc', $about->desc) }}</textarea>
                 </div>

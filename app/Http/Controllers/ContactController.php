@@ -21,6 +21,6 @@ class ContactController extends Controller
     {
         Contact::create($request->all());
 
-        return redirect()->route('contact.index')->with('success', 'Contact created successfully!');
+        return redirect()->route('contact.index')->with('success', 'Sizning habaringiz muvaffaqiyatli yuborildi!');
     }
 }

@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>About Us</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> Biz Haqimizda</h4>
     @if(session('success'))
         <div class="alert alert-success alert-dismissible" role="alert">
             <strong>Success!</strong> {{ session('success') }}
@@ -29,7 +29,7 @@
 
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="desc" class="form-label">Description</label>
+                                    <label for="desc" class="form-label">Tavsifi</label>
                                     <textarea name="desc" id="tinymce" class="form-control"
                                               rows="5">{{ old('desc') }}</textarea>
                                 </div>
@@ -37,21 +37,21 @@
 
                             <div class="row mb-3">
                                 <div class="col mb-0">
-                                    <label for="address" class="form-label">Address</label>
+                                    <label for="address" class="form-label">Manzil</label>
                                     <input type="text" id="nameBackdrop" class="form-control" name="address"
                                            value="{{ old('address') }}" required/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col mb-0">
-                                    <label for="telegram_account" class="form-label">Telegram Account</label>
+                                    <label for="telegram_account" class="form-label">Telegram Akkaunti</label>
                                     <input type="text" id="nameBackdrop" name="telegram_account" class="form-control"
                                            value="{{ old('telegram_account') }}" required/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col mb-0">
-                                    <label for="phone_number" class="form-label">Phone Number</label>
+                                    <label for="phone_number" class="form-label">Telefon Raqami</label>
                                     <input type="tel" id="nameBackdrop" name="phone_number" class="form-control"
                                            value="{{ old('phone_number') }}" required/>
                                 </div>
@@ -60,9 +60,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Close
+                                Yopmoq
                             </button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Saqlash</button>
                         </div>
                     </form>
                 </div>
@@ -75,7 +75,6 @@
                 data-bs-toggle="modal"
                 data-bs-target="#backDropModal"
             ><i class="bx bx-plus me-1"></i>
-                Create
             </button>
         </div>
     @endif
@@ -104,16 +103,17 @@
                             <div class="d-flex">
                                 @if(auth()->user()->can('edit'))
                                     <a href="{{ route('abouts.edit', $about->id) }}"
-                                       class="btn btn-warning me-2">Edit</a>
+                                       class="btn btn-warning me-2"><i class="bx bx-pencil me-2"></i></a>
                                 @endif
                                 @if(auth()->user()->can('delete'))
-                                    <form action="{{ route('abouts.delete', $about->id) }}" method="POST"  id="form-delete">
+                                    <form action="{{ route('abouts.destroy', $about->id) }}" method="POST"
+                                          id="form-delete">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button"
                                                 class="btn btn-danger"
                                                 onclick="delete_button({{$about->id}})">
-                                            <i class="bx bx-trash me-2"></i>
+                                            <i class="bx bx-trash-alt"></i>
                                         </button>
                                     </form>
                                 @endif

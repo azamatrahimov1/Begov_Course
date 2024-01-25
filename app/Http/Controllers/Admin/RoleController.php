@@ -12,16 +12,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::orderBy('id')->where('name', '!=', 'super-user')->get();
-        return view('admin.roles.index', compact('roles'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
         $permissions = Permission::orderBy('name')->get();
-        return view('admin.roles.create', compact('permissions'));
+
+        return view('admin.roles.index', compact('roles', 'permissions'));
     }
 
     /**
@@ -50,7 +43,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        $role = Role::where('name', '!=', 'admin')->findOrFail($role->id);
+        $role = Role::where('name', '!=', 'Dostonbek')->findOrFail($role->id);
         $permissions = Permission::orderBy('name')->get();
 
         return view('admin.roles.edit', compact('permissions','role'));

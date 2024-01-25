@@ -1,57 +1,81 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Messages') }}
-        </h2>
-    </x-slot>
-    <div class="py-4 px-4">
+@extends('admin.layout.app')
+@section('content')
 
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+    <h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light"></span> Xabarlar</h4>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <strong>Success!</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Full Name</th>
-                                <th>Phone Number</th>
-                                <th>Description</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            @foreach($contacts as $contact)
-                                <tbody>
-                                <tr>
-                                    <td>{{$contact->id}}</td>
-                                    <td>{{$contact->full_name}}</td>
-                                    <td>{{$contact->phone_number}}</td>
-                                    <td>{{$contact->desc}}</td>
-                                    <td>
-                                        <form action="{{ route('contacts.destroy', ['contact' => $contact->id]) }}"
-                                              method="POST" class="btn btn-sm btn-danger btn-lg">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    onclick="return confirm('Are you sure you want to delete this contact?')">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <div class="card">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">To'liq Ism</th>
+                    <th scope="col">Telefon Raqami</th>
+                    <th scope="col">Tavsifi</th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                @foreach($contacts as $contact)
+                    <tr>
+                        <td>{{$contact->id}}</td>
+                        <td>{{$contact->full_name}}</td>
+                        <td>{{$contact->phone_number}}</td>
+                        <td>{{$contact->desc}}</td>
+                        <td>
+                            <div class="d-flex">
+                                <form action="{{ route('contacts.destroy', ['contact' => $contact->id]) }}" method="POST"
+                                      id="form-delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            onclick="delete_button({{$contact->id}})">
+                                        <i class="bx bx-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+
+                </tbody>
+            </table>
         </div>
     </div>
-</x-app-layout>
+
+@endsection
+
+@section('script')
+    <script>
+        form = document.getElementById('form-delete');
+
+        function delete_button(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.action = '/contacts/' + id;
+                    form.submit()
+                }
+            })
+        }
+
+    </script>
+
+@endsection
+
+
+
+

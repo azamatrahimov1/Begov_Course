@@ -13,11 +13,10 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'show']);
+        Permission::create(['name' => 'show-contact']);
         Permission::create(['name' => 'create']);
         Permission::create(['name' => 'edit']);
         Permission::create(['name' => 'delete']);
         Permission::create(['name' => 'show-grammar-lessons']);
-        Permission::create(['name' => 'show_pre_IELTS']);
     }
 }
