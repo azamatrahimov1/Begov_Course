@@ -98,10 +98,10 @@
                                 <div class="px-4 rounded-bottom">
                                     <h3 class="text-white text-center mt-1">{{ $offline->title }}</h3>
                                     <p class="text-white mt-3">{!! $offline->desc !!}</p>
-                                    @if (Route::has('register'))
-                                        <a href="#"
+
+                                        <a href="{{ route('contact') }}"
                                            class="btn btn-primary border border-secondary rounded-pill px-4 py-2 mb-4 text-white">Batafsil</a>
-                                    @endif
+
                                 </div>
                             @endforeach
                         </div>

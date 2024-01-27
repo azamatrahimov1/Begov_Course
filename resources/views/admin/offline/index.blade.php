@@ -15,9 +15,6 @@
     @error('title')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
-    @error('price')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
     @error('desc')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror

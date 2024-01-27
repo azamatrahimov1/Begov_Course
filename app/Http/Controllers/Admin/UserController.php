@@ -20,6 +20,7 @@ class UserController extends Controller
                 $query->Orwhere('created_at', 'LIKE', '%' . request('search') . '%');
                 $query->Orwhere('phone_number', 'LIKE', '%' . request('search') . '%');
                 $query->Orwhere('end_date', 'LIKE', '%' . request('search') . '%');
+                $query->Orwhere('status', 'LIKE', '%' . request('search') . '%');
             })
             ->paginate(10);
 

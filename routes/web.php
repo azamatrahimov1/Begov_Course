@@ -26,16 +26,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', '\App\Http\Controllers\HomeController@index')->name('index');
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
+
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 
 Route::middleware('auth')->group(function () {
     //Main Screen
     Route::resource('/main-screen', MainScreenController::class)->middleware('role:super-user');
     //Contact
-    Route::resource('/contacts', ContactController::class)->middleware('can:show-contact');
+    Route::resource('/contacts', ContactController::class)->middleware('can:show-message');
     //About
     Route::resource('/abouts', AboutController::class)->middleware('role:super-user');
     //Type of Lessons

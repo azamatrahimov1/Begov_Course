@@ -20,8 +20,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'email', 'phone_number', 'end_date', 'password',
-    ];
+    protected $fillable = ['name', 'email', 'phone_number', 'end_date', 'password', 'status'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -49,12 +48,16 @@ class User extends Authenticatable
     }
 
     //user_like
-    public function likes() {
+    public function likes()
+    {
         return $this->belongsToMany(Lesson::class, 'lesson_like')->withTimestamps();
     }
-    public function likesLesson(Lesson $lesson) {
+
+    public function likesLesson(Lesson $lesson)
+    {
         return $this->likes()->where('lesson_id', $lesson->id)->exists();
     }
+
     public function toSearchableArray(): array
     {
         return [
@@ -63,6 +66,7 @@ class User extends Authenticatable
             'phone_number' => $this->phone_number,
             'created_at' => $this->created_at,
             'end_date' => $this->end_date,
+            'status' => $this->status,
         ];
     }
 }

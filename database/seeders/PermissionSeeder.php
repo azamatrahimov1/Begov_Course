@@ -13,7 +13,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'show-contact']);
+        Permission::create(['name' => 'show-message']);
         Permission::create(['name' => 'create']);
         Permission::create(['name' => 'edit']);
         Permission::create(['name' => 'delete']);

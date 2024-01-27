@@ -77,9 +77,9 @@
             </div>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="{{ route('home') }}"
+                    <a href="{{ route('index') }}"
                        class="nav-item nav-link @if(Route::Is('home')) active @endif">Home</a>
-                    <a href="{{ route('contact.index') }}"
+                    <a href="{{ route('contact') }}"
                        class="nav-item nav-link @if(Route::Is('contact.index')) active @endif">Contact</a>
                 </div>
                 <div class="d-flex m-3 me-0">

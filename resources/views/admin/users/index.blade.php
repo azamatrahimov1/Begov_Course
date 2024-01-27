@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <form action="{{ route('users.index') }}" method="GET" class="d-grid gap-1 d-md-flex justify-content-md-end">
+                    <form action="{{ route('users.index') }}" method="GET" class="d-grid gap-0 d-md-flex justify-content-md-end">
                         <input type="text" class="form-control" placeholder="Search" name="search" value="{{ request()->get('search') }}">
                         <button class="btn btn-primary" id="showToastPlacement" type="submit">
                             <i class="bx bx-search"></i>
@@ -127,6 +127,7 @@
                         <th scope="col">Telefon Raqami</th>
                         <th scope="col">Da Yaratilgan</th>
                         <th scope="col">Tugash Sanasi</th>
+                        <th scope="col">Status</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -144,12 +145,17 @@
                             <td>{{ $user->created_at }}</td>
                             <td>{{ $user->end_date }}</td>
                             <td>
+                                @if($user->end_date < now())
+                                    <span class="badge bg-label-danger me-1">Inactive</span>
+                                @else
+                                    <span class="badge bg-label-success me-1">Active</span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="d-flex">
                                     <a href="{{ route('users.edit', $user->id) }}"
                                        class="btn btn-warning me-2"><i class="bx bx-pencil me-2"></i></a>
-
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                          id="form-delete">
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" id="form-delete">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button"
@@ -158,6 +164,7 @@
                                             <i class="bx bx-trash-alt"></i>
                                         </button>
                                     </form>
+
                                 </div>
                             </td>
                         </tr>
@@ -185,7 +192,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.action = '/user/' + id;
+                    form.action = '/users/' + id;
                     form.submit()
                 }
             })

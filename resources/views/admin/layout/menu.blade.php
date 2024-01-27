@@ -64,6 +64,14 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
+        @if(auth()->user()->can('show-grammar-lessons'))
+            <li class="menu-item @if(Route::Is('lessons.index')) active @endif">
+                <a href="{{ route('lessons.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-plus-circle"></i>
+                    <div data-i18n="Analytics">Dars</div>
+                </a>
+            </li>
+        @endif
         @role('super-user')
         <li class="menu-item @if(Route::Is('role.index')) active @endif">
             <a href="{{ route('role.index') }}" class="menu-link">
@@ -111,7 +119,7 @@
             </a>
         </li>
         @endrole
-        @if(auth()->user()->can('show-contact'))
+        @if(auth()->user()->can('show-message'))
             <li class="menu-item @if(Route::Is('contacts.index')) active @endif">
                 <a href="{{ route('contacts.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chat"></i>
@@ -120,12 +128,6 @@
             </li>
         @endif
         @if(auth()->user()->can('show-grammar-lessons'))
-        <li class="menu-item @if(Route::Is('lessons.index')) active @endif">
-            <a href="{{ route('lessons.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-plus-circle"></i>
-                <div data-i18n="Analytics">Dars</div>
-            </a>
-        </li>
             <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-detail"></i>

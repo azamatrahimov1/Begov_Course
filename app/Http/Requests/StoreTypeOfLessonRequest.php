@@ -25,7 +25,6 @@ class StoreTypeOfLessonRequest extends FormRequest
             'image' => 'required|image',
             'title' => 'required',
             'desc' => 'required',
-            'price' => 'required',
         ];
     }
 }

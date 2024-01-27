@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('end_date');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-//            $table->decimal('price',10,2)->default(500000.00);
+            $table->integer('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
