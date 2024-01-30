@@ -21,9 +21,12 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
+                @php
+                    $i = 1;
+                @endphp
                 @foreach($contacts as $contact)
                     <tr>
-                        <td>{{$contact->id}}</td>
+                        <td>{{$i++}}</td>
                         <td>{{$contact->full_name}}</td>
                         <td>{{$contact->phone_number}}</td>
                         <td>{{$contact->desc}}</td>

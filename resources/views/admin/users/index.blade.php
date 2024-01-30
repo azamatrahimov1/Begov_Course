@@ -104,7 +104,7 @@
                 </div>
                 <div class="col-md-6">
                     <form action="{{ route('users.index') }}" method="GET" class="d-grid gap-0 d-md-flex justify-content-md-end">
-                        <input type="text" class="form-control" placeholder="Search" name="search" value="{{ request()->get('search') }}">
+                        <input type="text" class="form-control" placeholder="Search" name="search" id="searche" value="{{ request()->get('search') }}">
                         <button class="btn btn-primary" id="showToastPlacement" type="submit">
                             <i class="bx bx-search"></i>
                         </button>
@@ -131,9 +131,13 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach($users as $user)
+
                         <tr>
-                            <td>{{ $user->id }}</td>
+                            <td>{{ $i++ }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>

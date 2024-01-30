@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
             'end_date' => Carbon::now()->addDays(62),
         ]);
 
-        $user->assignRole('grammar');
+        $user->assignRole('show-grammar-lessons');
 
         event(new Registered($user));
 

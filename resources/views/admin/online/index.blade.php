@@ -90,9 +90,12 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach($onlines as $online)
                         <tr>
-                            <td>{{$online->id}}</td>
+                            <td>{{$i++}}</td>
                             <td>{{$online->title}}</td>
                             <td>
                                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">

@@ -121,6 +121,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
+<!-- ajax jquery  -->
+<script src="http://ajax.gooleapis.com/alax/libs/jquery/3.6.6/jquery.min.js"></script>
+
 <script>
     $('#tinymce').summernote({
         tabsize: 2,

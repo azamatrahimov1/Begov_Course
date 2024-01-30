@@ -76,9 +76,12 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
+                @php
+                    $i = 1;
+                @endphp
                 @foreach($mainScreens as $mainScreen)
                     <tr>
-                        <td>{{$mainScreen->id}}</td>
+                        <td>{{$i++}}</td>
                         <td>{{$mainScreen->title}}</td>
                         <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">

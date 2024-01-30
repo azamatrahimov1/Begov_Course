@@ -88,10 +88,13 @@
                     <th scope="col">Nomi</th>
                 </tr>
                 </thead>
+                @php
+                    $i = 1;
+                @endphp
                 @foreach($roles as $role)
                     <tbody class="table-border-bottom-0">
                     <tr>
-                        <td>{{$role->id}}</td>
+                        <td>{{$i++}}</td>
                         <td>{{$role->name}}</td>
                         <td>
                             <div class="d-flex">

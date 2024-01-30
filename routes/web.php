@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/role', RoleController::class)->middleware('role:super-user');
     //Users
     Route::resource('/users', UserController::class)->middleware('role:super-user');
+
     //Lessons
     Route::get('/dashboard', [LessonController::class, 'index'])->name('lessons.index')->middleware('can:show-grammar-lessons');
     Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show')->middleware('can:show-grammar-lessons');

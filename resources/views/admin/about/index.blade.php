@@ -92,9 +92,12 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
+                @php
+                    $i = 1;
+                @endphp
                 @foreach($abouts as $about)
                     <tr>
-                        <td>{{$about->id}}</td>
+                        <td>{{$i++}}</td>
                         <td>{!! $about->desc !!}</td>
                         <td>{{$about->address}}</td>
                         <td>{{$about->telegram_account}}</td>

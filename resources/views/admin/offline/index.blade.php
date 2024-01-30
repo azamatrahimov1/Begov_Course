@@ -90,9 +90,12 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                    @php
+                        $i = 1;
+                    @endphp
                     @foreach($offlines as $offline)
                         <tr>
-                            <td>{{$offline->id}}</td>
+                            <td>{{$i++}}</td>
                             <td>{{$offline->title}}</td>
                             <td>
                                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">

@@ -150,9 +150,12 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
+                @php
+                    $i = 1;
+                @endphp
                 @foreach($lessons as $lesson)
                     <tr>
-                        <td>{{ $lesson->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $lesson->name }}</td>
                         <td>
                             <div class="d-flex">
