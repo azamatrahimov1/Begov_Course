@@ -2,9 +2,7 @@
 @section('content')
 
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Edit</span> Role</h4>
-    @error('name')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+
     <div class="card mb-4">
         <div class="card-body">
             <form method="post" action="{{route('role.update', $role->id)}}">
@@ -20,6 +18,9 @@
                             id="defaultFormControlInput"
                             name="name"
                             aria-describedby="defaultFormControlHelp"/>
+                        @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -37,7 +38,7 @@
 
                     <button type="submit"
                             class="btn btn-primary">
-                        Save
+                        Topshirish
                     </button>
             </form>
         </div>

@@ -2,9 +2,7 @@
 @section('content')
 
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tahrirlash/</span> Asosiy Ekran</h4>
-    @error('image')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
+
     <div class="card mb-4">
         <div class="card-body">
             <form method="POST" action="{{ route('main-screen.update', $mainScreen->id) }}"
@@ -20,10 +18,13 @@
                 <div class="mb-3">
                     <label for="image" class="form-label">Fotosurat</label>
                     <input type="file" class="form-control" name="image" value="{{ $mainScreen->image }}" required>
+                    @error('image')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Topshirish</button>
                 </div>
 
             </form>

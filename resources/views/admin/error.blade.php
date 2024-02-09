@@ -27,12 +27,12 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Error - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Begov</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('admin_assets/img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('admin_assets/img/avatars/1.jpg') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,7 +81,7 @@
             </form>
             <div class="mt-3">
                 <img
-                    src="{{ asset('admin_assets/img/illustrations/page-misc-error-light.png') }}"
+                    src="{{ asset('admin_assets/img/illustrations/begov.png') }}"
                     alt="page-misc-error-light"
                     width="500"
                     class="img-fluid"
