@@ -249,7 +249,7 @@ class LessonController extends Controller
 
         $liker->likes()->attach($lesson);
 
-        return redirect()->route('lessons.index')->with('success', 'Liked successfully!');
+        return redirect()->route('lessons.index');
     }
 
     public function unlike(Lesson $lesson)
@@ -258,6 +258,6 @@ class LessonController extends Controller
 
         $liker->likes()->detach($lesson);
 
-        return redirect()->route('lessons.index')->with('success', 'Liked successfully!');
+        return redirect()->route('lessons.index');
     }
 }
