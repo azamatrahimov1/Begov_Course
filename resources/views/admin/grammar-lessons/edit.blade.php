@@ -11,7 +11,7 @@
 
                 <div class="row">
                     <div class="col mb-3">
-                        <label for="name" class="form-label">Dars Nomi</label>
+                        <label for="name" class="form-label">№ - Dars</label>
                         <input type="text" class="form-control" name="name"
                                value="{{ old('name', $lesson->name) }}" required/>
                         @error('name')
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="name_video" class="form-label">Name Video</label>
+                    <label for="name_video" class="form-label">Video Nomi</label>
                     <input type="text" class="form-control" name="name_video"
                            value="{{ old('name_video', $lesson->name_video) }}">
                     @error('name_video')
@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="video" class="form-label">Video File</label>
-                    <input type="file" class="form-control mb-1" name="video"
+                    <label for="video" class="form-label">Video</label>
+                    <input type="text" class="form-control mb-1" name="video"
                            value="{{ old('video', $lesson->video) }}">
                     @error('video')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="name_image" class="form-label">Name Video</label>
+                    <label for="name_image" class="form-label">Fotosurat Nomi</label>
                     <input type="text" class="form-control" name="name_image"
                            value="{{ old('name_image', $lesson->name_image) }}">
                     @error('name_image')
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Image</label>
+                    <label for="image" class="form-label">Fotosurat</label>
                     <input type="file" class="form-control mb-1" name="image"
                            value="{{ old('image', $lesson->image) }}">
                     @error('image')
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="pdf" class="form-label">PDF</label>
+                    <label for="pdf" class="form-label">Docx yoki PDF</label>
                     <input type="file" name="pdf" class="form-control mb-1" value="{{ old('pdf', $lesson->pdf) }}">
                     @error('pdf')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="voice" class="form-label">Voice</label>
+                    <label for="voice" class="form-label">Ovoz</label>
                     <input type="file" class="form-control mb-1" name="voice"
                            value="{{ old('voice', $lesson->voice) }}">
                     @error('voice')
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="homework" class="form-label">Homework</label>
+                    <label for="homework" class="form-label">Yu Vazifasi</label>
                     <textarea name="homework" id="tinymce" class="form-control"
                               rows="5">{{ old('answer', $lesson->homework) }}</textarea>
                     @error('homework')
@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="answer" class="form-label">Answer</label>
+                    <label for="answer" class="form-label">Javob</label>
                     <textarea name="answer" id="summernote" class="form-control"
                               rows="5">{{ old('answer', $lesson->answer) }}</textarea>
                     @error('answer')

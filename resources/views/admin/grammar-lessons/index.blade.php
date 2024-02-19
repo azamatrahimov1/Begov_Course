@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="video" class="form-label">Video</label>
-                                    <input type="file" id="dobExLarge" name="video" class="form-control"
+                                    <input type="text" id="dobExLarge" name="video" class="form-control"
                                            value="{{ old('video') }}" required/>
                                 </div>
                             </div>

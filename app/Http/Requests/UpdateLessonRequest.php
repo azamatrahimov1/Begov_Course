@@ -24,7 +24,7 @@ class UpdateLessonRequest extends FormRequest
         return [
             'name' => 'required',
             'name_video' => 'required',
-            'video' => 'required|file|mimes:mp4,avi,mov,wmv',
+            'video' => 'required',
             'name_image' => 'required',
             'image' => 'required|mimes:png,jpg,webp',
             'voice' => 'required|mimes:mp3,ogg,wav,flac,aac',

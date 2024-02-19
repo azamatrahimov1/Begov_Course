@@ -6,9 +6,10 @@
     <div class="row mb-5">
         <div class="col-md-6 col-lg-8 mb-2 mx-auto my-auto">
             <div class="card">
-                <video class="card-img-top" controls>
-                    <source src="{{ asset('storage/'.$lesson->video) }}" type="video/mp4">
-                </video>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item card-img-top" height="450"
+                            src="https://www.youtube.com/embed/{{ $lesson->video }}" allowfullscreen></iframe>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ $lesson->name_video }}</h5>
                 </div>
@@ -66,15 +67,19 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Vocabulary</h5>
-                    <audio class="card-text mt-2" controls>
-                        <source src="{{ asset('storage/'. $lesson->voice) }}" type="audio/mp3">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <a href="{{ asset('storage/'. $lesson->pdf) }}" class="btn btn-primary mt-2">Faylni Yuklab
-                        Olish</a>
+                    <div class="text-center">
+                        <audio class="card-text mt-2" controls>
+                            <source src="{{ asset('storage/'. $lesson->voice) }}" type="audio/mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <a href="{{ asset('storage/'. $lesson->pdf) }}" class="btn btn-primary mt-2">
+                            <i class="bx bx-download me-2"></i> Faylni Yuklab Olish</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
 @endsection

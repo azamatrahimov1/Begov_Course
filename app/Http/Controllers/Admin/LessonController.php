@@ -67,7 +67,7 @@ class LessonController extends Controller
 
             $answer = $dom->saveHTML();
 
-            $VideoPath = $request->file('video')->store('videos', 'public');
+//            $VideoPath = $request->input('video')->store('videos', 'public');
             $ImagePath = $request->file('image')->store('images', 'public');
             $VoicePath = $request->file('voice')->store('voices', 'public');
             $PdfPath = $request->file('pdf')->store('files', 'public');
@@ -75,7 +75,8 @@ class LessonController extends Controller
             Lesson::create([
                 'name' => $validatedData['name'],
                 'name_video' => $validatedData['name_video'],
-                'video' => $VideoPath,
+                'video' => $validatedData['video'],
+//                'video' => $VideoPath,
                 'name_image' => $validatedData['name_image'],
                 'image' => $ImagePath,
                 'voice' => $VoicePath,
@@ -147,13 +148,13 @@ class LessonController extends Controller
             $answer = $dom->saveHTML();
             $validatedData['answer'] = $answer;
 
-            if ($request->hasFile('video')) {
-                $newVideo = $request->file('video')->store('videos', 'public');
-                if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
-                    Storage::disk('public')->delete($lesson->video);
-                }
-                $validatedData['video'] = $newVideo;
-            }
+//            if ($request->hasFile('video')) {
+//                $newVideo = $request->file('video')->store('videos', 'public');
+//                if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
+//                    Storage::disk('public')->delete($lesson->video);
+//                }
+//                $validatedData['video'] = $newVideo;
+//            }
 
             if ($request->hasFile('pdf')) {
                 $newPdf = $request->file('pdf')->store('files', 'public');
