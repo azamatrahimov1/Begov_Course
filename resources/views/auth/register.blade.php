@@ -34,7 +34,7 @@
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
-                            name="password_confirmation" required autocomplete="new-password" placeholder="+998..."/>
+                            name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
@@ -45,7 +45,7 @@
 
             <x-text-input id="phone_number" class="block mt-1 w-full"
                             type="tel"
-                            name="phone_number" required autocomplete="new-phone-number" />
+                            name="phone_number" required autocomplete="new-phone-number" placeholder="+998..."/>
 
             <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
         </div>
