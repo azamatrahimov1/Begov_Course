@@ -14,7 +14,7 @@
 
     <!-- Contact Start -->
     <div class="container-fluid contact py-5">
-        <div class="container py-5">иоилои
+        <div class="container py-5">
             <div class="p-5 bg-light rounded">
                 <div class="row g-4">
                     <div class="col-12">
@@ -37,10 +37,17 @@
                             @csrf
 
                             <input type="text" name="full_name" class="w-100 form-control border-0 py-3 mb-4" placeholder="To'liq Ism">
-                            <input type="number" name="phone_number" class="w-100 form-control border-0 py-3 mb-4"
-                                   placeholder="Telefon Raqami">
-                            <textarea name="desc" class="w-100 form-control border-0 mb-4" rows="5" cols="10"
-                                      placeholder="Xabaringiz"></textarea>
+                            @error('full_name')
+                            <div class="alert alert-danger" role="alert">Ushbu maydon bo'sh bo'lishi mumkin emas!</div>
+                            @enderror
+                            <input type="number" name="phone_number" class="w-100 form-control border-0 py-3 mb-4" placeholder="Telefon Raqami">
+                            @error('phone_number')
+                            <div class="alert alert-danger" role="alert">Ushbu maydon bo'sh bo'lishi mumkin emas!</div>
+                            @enderror
+                            <textarea name="desc" class="w-100 form-control border-0 mb-4" rows="5" cols="10" placeholder="Xabaringiz"></textarea>
+                            @error('desc')
+                            <div class="alert alert-danger" role="alert">Ushbu maydon bo'sh bo'lishi mumkin emas!</div>
+                            @enderror
                             <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary "
                                     type="submit">Yuborish
                             </button>

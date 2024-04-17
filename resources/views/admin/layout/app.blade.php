@@ -95,6 +95,23 @@
 <script src="{{ asset('admin_assets/vendor/js/menu.js') }}"></script>
 <!-- endbuild -->
 
+<!-- Pusher Notification -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('05beb96fd0f4c0e32cec', {
+        cluster: 'ap2'
+    });
+
+    var channel = pusher.subscribe('message');
+    channel.bind('form-submitted', function(data) {
+
+    });
+</script>
+
 <!-- Vendors JS -->
 <script src="{{ asset('admin_assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 

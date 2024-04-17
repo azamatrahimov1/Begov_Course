@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageCreate;
 use App\Models\About;
-use App\Models\Banner;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -19,8 +19,22 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        Contact::create($request->all());
+        $message = $request->validate([
+            'full_name' => 'required|string',
+            'phone_number' => 'required|regex:/^(\+?998)?\d{9}$/|unique:contacts',
+            'desc' => 'required',
+        ]);
 
-        return redirect()->route('contact.index')->with('success', 'Sizning habaringiz muvaffaqiyatli yuborildi!');
+        Contact::create($message);
+
+        $data = [
+            'full_name' => $message['full_name'],
+            'phone_number' => $message['phone_number'],
+            'desc' => $message['desc'],
+        ];
+
+        event(new MessageCreate($data));
+
+        return redirect()->back()->with('success', 'Sizning habaringiz muvaffaqiyatli yuborildi!');
     }
 }
