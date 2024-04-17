@@ -123,11 +123,9 @@
                         <th scope="col">#</th>
                         <th scope="col">Toliq Ismi</th>
                         <th scope="col">Elektron Pochta</th>
-                        <th scope="col">Roli</th>
                         <th scope="col">Telefon Raqami</th>
-                        <th scope="col">Da Yaratilgan</th>
+                        <th scope="col">Yaratilgan Sanasi</th>
                         <th scope="col">Tugash Sanasi</th>
-                        <th scope="col">Status</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -140,21 +138,9 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>
-                                @foreach($user->roles as $role)
-                                    {{ $role->name }}
-                                @endforeach
-                            </td>
                             <td>{{ $user->phone_number }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td>{{ $user->end_date }}</td>
-                            <td>
-                                @if($user->end_date < now())
-                                    <span class="badge bg-label-danger me-1">Inactive</span>
-                                @else
-                                    <span class="badge bg-label-success me-1">Active</span>
-                                @endif
-                            </td>
                             <td>
                                 <div class="d-flex">
                                     <a href="{{ route('users.edit', $user->id) }}"

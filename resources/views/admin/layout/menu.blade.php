@@ -73,12 +73,12 @@
             </li>
         @endif
         @role('super-user')
-        <li class="menu-item @if(Route::Is('role.index')) active @endif">
-            <a href="{{ route('role.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Analytics">Rollar</div>
-            </a>
-        </li>
+{{--        <li class="menu-item @if(Route::Is('role.index')) active @endif">--}}
+{{--            <a href="{{ route('role.index') }}" class="menu-link">--}}
+{{--                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>--}}
+{{--                <div data-i18n="Analytics">Rollar</div>--}}
+{{--            </a>--}}
+{{--        </li>--}}
 
         <li class="menu-item @if(Route::Is('users.index')) active @endif">
             <a href="{{ route('users.index') }}" class="menu-link">
