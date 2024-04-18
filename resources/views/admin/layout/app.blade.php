@@ -20,6 +20,23 @@
     data-assets-path="../assets/"
     data-template="vertical-menu-template-free"
 >
+<!-- Pusher Notification -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('05beb96fd0f4c0e32cec', {
+        cluster: 'ap2'
+    });
+
+    var channel = pusher.subscribe('my-channel-p');
+    channel.bind('my-event-p', function(data) {
+        alert(JSON.stringify(data));
+    });
+</script>
+
 <head>
     <meta charset="utf-8"/>
     <meta
@@ -95,22 +112,6 @@
 <script src="{{ asset('admin_assets/vendor/js/menu.js') }}"></script>
 <!-- endbuild -->
 
-<!-- Pusher Notification -->
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-<script>
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('05beb96fd0f4c0e32cec', {
-        cluster: 'ap2'
-    });
-
-    var channel = pusher.subscribe('message');
-    channel.bind('form-submitted', function(data) {
-
-    });
-</script>
 
 <!-- Vendors JS -->
 <script src="{{ asset('admin_assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
