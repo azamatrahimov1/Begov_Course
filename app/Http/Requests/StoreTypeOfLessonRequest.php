@@ -22,6 +22,7 @@ class StoreTypeOfLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => 'required|image',
             'title' => 'required',
             'desc' => 'required',
         ];
