@@ -31,10 +31,10 @@ use Illuminate\Queue\SerializesModels;
          */
         public function broadcastOn()
         {
-            return new Channel('message');
+            return ['my-channel-p'];
         }
         public function broadcastAs()
         {
-            return 'form-submitted';
+            return 'my-event-p';
         }
     }
