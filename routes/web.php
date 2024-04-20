@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\LessonLikeController;
+use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\MainScreenController;
 use App\Http\Controllers\Admin\OfflineController;
 use App\Http\Controllers\Admin\PreIELTSController;
@@ -34,6 +35,8 @@ Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'
 Route::middleware('auth')->group(function () {
     //Main Screen
     Route::resource('/main-screen', MainScreenController::class)->middleware('role:super-user');
+    //logo
+    Route::resource('/logo', LogoController::class)->middleware('role:super-user');
     //Contact
     Route::resource('/contacts', ContactController::class)->middleware('can:show-message');
     //About
