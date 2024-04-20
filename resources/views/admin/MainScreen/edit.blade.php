@@ -17,7 +17,7 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Fotosurat</label>
-                    <input type="file" class="form-control" name="image" value="{{ $mainScreen->image }}" required>
+                    <input type="file" class="form-control" name="image" value="{{ $mainScreen->image }}">
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror

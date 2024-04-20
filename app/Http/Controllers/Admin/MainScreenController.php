@@ -62,16 +62,15 @@ class MainScreenController extends Controller
                 }
 
                 $validatedData['image'] = $filename;
+                $validatedData['title'] = $request->title;
             }
 
             $mainScreen->update($validatedData);
 
             return redirect()->route('main-screen.index')->with('success', 'Main Screen updated successfully!');
         } catch (\Exception $e) {
-            // Log the error for debugging purposes
             Log::error('Error updating Main Screen: ' . $e->getMessage());
 
-            // Redirect back with an error message
             return redirect()->back()->with('error', 'Error updating Main Screen. Please check the logs for details.');
         }
     }

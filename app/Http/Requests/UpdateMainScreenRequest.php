@@ -22,7 +22,8 @@ class UpdateMainScreenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'required|image',
+            'title' => 'string',
+            'image' => 'image',
         ];
     }
 }
