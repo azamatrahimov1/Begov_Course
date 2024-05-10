@@ -24,7 +24,7 @@ class UpdateAboutRequest extends FormRequest
         return [
             'desc' => 'required',
             'address' => 'required',
-            'telegram_account' => 'required|unique:abouts',
+//            'telegram_account' => 'required|unique:abouts',
         ];
     }
 }

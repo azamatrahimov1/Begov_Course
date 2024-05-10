@@ -73,12 +73,12 @@
             </li>
         @endif
         @role('super-user')
-{{--        <li class="menu-item @if(Route::Is('role.index')) active @endif">--}}
-{{--            <a href="{{ route('role.index') }}" class="menu-link">--}}
-{{--                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>--}}
-{{--                <div data-i18n="Analytics">Rollar</div>--}}
-{{--            </a>--}}
-{{--        </li>--}}
+        <li class="menu-item @if(Route::Is('role.index')) active @endif">
+            <a href="{{ route('role.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div data-i18n="Analytics">Rollar</div>
+            </a>
+        </li>
 
         <li class="menu-item @if(Route::Is('users.index')) active @endif">
             <a href="{{ route('users.index') }}" class="menu-link">
@@ -91,6 +91,13 @@
             <a href="{{ route('main-screen.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-store"></i>
                 <div data-i18n="Analytics">Asosiy Ekran</div>
+            </a>
+        </li>
+
+        <li class="menu-item @if(Route::Is('logo.index')) active @endif">
+            <a href="{{ route('logo.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-meh-blank"></i>
+                <div data-i18n="Analytics">Logotip</div>
             </a>
         </li>
 
@@ -114,7 +121,7 @@
         </li>
         <li class="menu-item @if(Route::Is('abouts.index')) active @endif">
             <a href="{{ route('abouts.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home"></i>
+                <i class="menu-icon tf-icons bx bxs-user-account"></i>
                 <div data-i18n="Analytics">Biz Haqimizda</div>
             </a>
         </li>

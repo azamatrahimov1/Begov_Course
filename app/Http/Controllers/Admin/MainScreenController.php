@@ -57,7 +57,6 @@ class MainScreenController extends Controller
                 $filename = $request->file('image')->store('images', 'public');
 
                 if ($mainScreen->image) {
-                    // Delete the old image before updating the new one
                     Storage::disk('public')->delete($mainScreen->image);
                 }
 

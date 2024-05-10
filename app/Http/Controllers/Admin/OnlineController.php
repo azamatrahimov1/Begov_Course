@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTypeOfLessonRequest;
 use App\Http\Requests\UpdateTypeOfLessonRequest;
 use App\Models\Online;
+use App\Services\DOMDocumentService;
 use DOMDocument;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -20,39 +21,26 @@ class OnlineController extends Controller
         return view('admin.online.index', compact('onlines'));
     }
 
-    public function store(StoreTypeOfLessonRequest $request)
+    public function store(StoreTypeOfLessonRequest $request, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
 
             $desc = $request->desc;
-            $dom = new DOMDocument();
-            $dom->loadHTML($desc, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $processedDesc = $docService->processHTML($desc);
 
-            $images = $dom->getElementsByTagName('img');
-
-            foreach ($images as $key => $img) {
-                $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                $image_name = "/storage/images" . time() . $key . '.jpeg,jpg,png,gif,webp';
-                file_put_contents(public_path($image_name), $data);
-
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $image_name);
-            }
-
-            $desc = $dom->saveHTML();
+            $validatedData['desc'] = $processedDesc;
 
             $ImagePath = $request->file('image')->store('images', 'public');
 
             Online::create([
                 'title' => $validatedData['title'],
                 'image' => $ImagePath,
-                'desc' => $desc,
+                'desc' => $processedDesc,
             ]);
 
             return redirect()->route('online.index')->with('success', 'Online lesson created successfully!');
         } catch (\Exception $e) {
-            // Handle errors
             return redirect()->back()->with('error', 'Error creating Online lesson: ' . $e->getMessage());
         }
     }
@@ -62,30 +50,15 @@ class OnlineController extends Controller
         return view('admin.online.edit', compact('online'));
     }
 
-    public function update(UpdateTypeOfLessonRequest $request, Online $online)
+    public function update(UpdateTypeOfLessonRequest $request, Online $online, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
 
             $desc = $validatedData['desc'];
-            $dom = new DOMDocument();
-            $dom->loadHTML($desc, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $processedDesc = $docService->processHTML($desc);
 
-            $images = $dom->getElementsByTagName('img');
-
-            foreach ($images as $key => $img) {
-                if (strpos($img->getAttribute('src'), 'data:image/') === 0) {
-                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                    $image_name = "/storage/images/" . time() . $key . '.jpeg';
-                    file_put_contents(public_path($image_name), $data);
-
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src', $image_name);
-                }
-            }
-
-            $desc = $dom->saveHTML();
-            $validatedData['desc'] = $desc;
+            $validatedData['desc'] = $processedDesc;
 
             if ($request->hasFile('image')) {
                 $newImage = $request->file('image')->store('images', 'public');
@@ -95,29 +68,25 @@ class OnlineController extends Controller
                 $validatedData['image'] = $newImage;
             }
 
-            // Обновление данных модели
             $online->update($validatedData);
 
             return redirect()->route('online.index')->with('success', 'Online lesson updated successfully!');
         } catch (\Exception $e) {
-            // Log the error for debugging purposes
             Log::error('Error updating Online lesson: ' . $e->getMessage());
 
-            // Redirect back with an error message
             return redirect()->back()->with('error', 'Error updating Main Screen. Please check the logs for details.');
         }
     }
 
-    public function destroy(Online $online)
+    public function destroy(Online $online, DOMDocumentService $docService)
     {
         try {
             if (!$online->exists) {
                 return redirect()->route('online.index')->with('error', 'Online lesson not found.');
             }
 
-            // Удаление изображений в описании
-            if (!empty($online->desc)) {
-                // ... (ваш код для удаления изображений из описания)
+            if (!empty($lesson->desc)) {
+                $docService->delete($lesson->desc);
             }
 
             if ($online->image && Storage::disk('public')->exists($online->image)) {
@@ -128,7 +97,6 @@ class OnlineController extends Controller
 
             return redirect()->route('online.index')->with('success', 'Online lesson deleted successfully!');
         } catch (\Exception $e) {
-            // Обработка ошибок
             return redirect()->back()->with('error', 'Error deleting online lesson: ' . $e->getMessage());
         }
     }

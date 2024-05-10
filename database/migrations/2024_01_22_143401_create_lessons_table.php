@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name_video');
             $table->text('video');
             $table->string('name_image');
-            $table->text('image');
             $table->text('voice');
             $table->text('pdf');
             $table->longText('homework');

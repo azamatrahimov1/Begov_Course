@@ -85,8 +85,8 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Tavsifi</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Description</th>
                     <th scope="col">Telegram</th>
                     <th scope="col">Phone Number</th>
                 </tr>

@@ -6,12 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Models\Lesson;
-use App\Models\Like;
+use App\Models\Photo;
+use App\Services\DOMDocumentService;
 use Carbon\Carbon;
-use DOMDocument;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,68 +26,58 @@ class LessonController extends Controller
         }
     }
 
-    public function store(StoreLessonRequest $request)
+    public function store(StoreLessonRequest $request, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
 
-            $homework = $request->homework;
-            $dom = new DOMDocument();
-            $dom->loadHTML($homework, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $processedHomework = $docService->processHTML($request->homework);
+            $processedAnswer = $docService->processHTML($request->answer);
 
-            $images = $dom->getElementsByTagName('img');
+            $videoPath = $request->file('video')->store('videos', 'public');
+            $voicePath = $request->file('voice')->store('voices', 'public');
+            $pdfPath = $request->file('pdf')->store('files', 'public');
 
-            foreach ($images as $key => $img) {
-                $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                $image_name = "/storage/images" . time() . $key . '.jpeg,jpg,png,gif,webp';
-                file_put_contents(public_path($image_name), $data);
-
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $image_name);
-            }
-
-            $homework = $dom->saveHTML();
-
-            $answer = $request->answer;
-            $dom = new DOMDocument();
-            $dom->loadHTML($answer, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-
-            $images = $dom->getElementsByTagName('img');
-
-            foreach ($images as $key => $img) {
-                $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                $image_name = "/storage/images" . time() . $key . '.jpeg,jpg,png,gif,webp';
-                file_put_contents(public_path($image_name), $data);
-
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $image_name);
-            }
-
-            $answer = $dom->saveHTML();
-
-//            $VideoPath = $request->input('video')->store('videos', 'public');
-            $ImagePath = $request->file('image')->store('images', 'public');
-            $VoicePath = $request->file('voice')->store('voices', 'public');
-            $PdfPath = $request->file('pdf')->store('files', 'public');
-
-            Lesson::create([
+            $lesson = Lesson::create([
                 'name' => $validatedData['name'],
                 'name_video' => $validatedData['name_video'],
-                'video' => $validatedData['video'],
-//                'video' => $VideoPath,
+                'video' => $videoPath,
                 'name_image' => $validatedData['name_image'],
-                'image' => $ImagePath,
-                'voice' => $VoicePath,
-                'pdf' => $PdfPath,
-                'homework' => $homework,
-                'answer' => $answer,
+                'voice' => $voicePath,
+                'pdf' => $pdfPath,
+                'homework' => $processedHomework,
+                'answer' => $processedAnswer,
             ]);
+
+            if ($request->hasFile('photos')) {
+                $photos = $this->getPhotos($request->photos, $lesson->id);
+
+                $lesson->photos()->insert($photos);
+            }
 
             return redirect()->route('lessons.index')->with('success', 'Lesson created successfully!');
         } catch (\Exception $e) {
-            // Handle errors
+            \Log::error('Error creating lesson: ' . $e->getMessage(), [
+                'exception' => $e,
+                'request_data' => $request->all(),
+            ]);
+
             return redirect()->back()->with('error', 'Error creating lesson: ' . $e->getMessage());
         }
+    }
+
+    public function getPhotos($data, $lessonId)
+    {
+        $photos = [];
+        foreach ($data as $photo) {
+            $photoPath = $photo->store('lesson_photos', 'public');
+
+            $photos[] = [
+                'path' => $photoPath,
+                'lesson_id' => $lessonId,
+            ];
+        }
+        return $photos;
     }
 
     public function show(Lesson $lesson)
@@ -97,64 +85,35 @@ class LessonController extends Controller
         return view('admin.grammar-lessons.show', compact('lesson'));
     }
 
-    public function edit(Lesson $lesson)
+    public function edit(Lesson $lesson, $id)
     {
+        $lesson = Lesson::with('photos')->findOrFail($id);
+
         return view('admin.grammar-lessons.edit', compact('lesson'));
     }
 
-    public function update(UpdateLessonRequest $request, Lesson $lesson)
+    public function update(UpdateLessonRequest $request, Lesson $lesson, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
 
-            $homework = $validatedData['homework'];
-            $dom = new DOMDocument();
-            $dom->loadHTML($homework, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $homework = $request->homework;
+            $processedHomework = $docService->processHTML($homework);
 
-            $images = $dom->getElementsByTagName('img');
-
-            foreach ($images as $key => $img) {
-                if (strpos($img->getAttribute('src'), 'data:image/') === 0) {
-                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                    $image_name = "/storage/images/" . time() . $key . '.jpeg';
-                    file_put_contents(public_path($image_name), $data);
-
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src', $image_name);
-                }
-            }
-
-            $homework = $dom->saveHTML();
             $validatedData['homework'] = $homework;
 
-            // Обработка ответа (answer)
-            $answer = $validatedData['answer'];
-            $dom = new DOMDocument();
-            $dom->loadHTML($answer, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $answer = $request->answer;
+            $processedAnswer = $docService->processHTML($answer);
 
-            $images = $dom->getElementsByTagName('img');
+            $validatedData['answer'] = $processedAnswer;
 
-            foreach ($images as $key => $img) {
-                if (strpos($img->getAttribute('src'), 'data:image/') === 0) {
-                    $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                    $image_name = "/storage/images/" . time() . $key . '.jpeg';
-                    file_put_contents(public_path($image_name), $data);
-
-                    $img->removeAttribute('src');
-                    $img->setAttribute('src', $image_name);
+            if ($request->hasFile('video')) {
+                $newVideo = $request->file('video')->store('videos', 'public');
+                if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
+                    Storage::disk('public')->delete($lesson->video);
                 }
+                $validatedData['video'] = $newVideo;
             }
-
-            $answer = $dom->saveHTML();
-            $validatedData['answer'] = $answer;
-
-//            if ($request->hasFile('video')) {
-//                $newVideo = $request->file('video')->store('videos', 'public');
-//                if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
-//                    Storage::disk('public')->delete($lesson->video);
-//                }
-//                $validatedData['video'] = $newVideo;
-//            }
 
             if ($request->hasFile('pdf')) {
                 $newPdf = $request->file('pdf')->store('files', 'public');
@@ -163,8 +122,6 @@ class LessonController extends Controller
                 }
                 $validatedData['pdf'] = $newPdf;
             }
-
-
 
             if ($request->hasFile('image')) {
                 $newImage = $request->file('image')->store('images', 'public');
@@ -182,17 +139,15 @@ class LessonController extends Controller
                 $validatedData['voice'] = $newVoice;
             }
 
-            // Обновление данных модели
             $lesson->update($validatedData);
 
             return redirect()->route('lessons.index')->with('success', 'Lesson updated successfully!');
         } catch (\Exception $e) {
-            // Обработка ошибок
             return redirect()->back()->with('error', 'Error updating lesson: ' . $e->getMessage());
         }
     }
 
-    public function destroy(Lesson $lesson)
+    public function destroy(Lesson $lesson, DOMDocumentService $docService)
     {
         try {
             $lesson = Lesson::find($lesson->id);
@@ -201,35 +156,19 @@ class LessonController extends Controller
                 return redirect()->route('lessons.index')->with('error', 'Lesson not found.');
             }
 
-            // Проверка наличия и непустоты поля desc
-            if (!empty($lesson->desc)) {
-                $dom = new DOMDocument();
-                $dom->loadHTML($lesson->desc, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-                $images = $dom->getElementsByTagName('img');
+            if (!empty($lesson->homework)) {
+                $docService->delete($lesson->homework);
+            }
 
-                foreach ($images as $img) {
-                    $path = public_path($img->getAttribute('src'));
+            if (!empty($lesson->answer)) {
+                $docService->delete($lesson->answer);
+            }
 
-                    if (File::exists($path)) {
-                        File::delete($path);
-                    }
+            $mediaFiles = ['video', 'image', 'voice', 'pdf'];
+            foreach ($mediaFiles as $file) {
+                if ($lesson->$file && Storage::disk('public')->exists($lesson->$file)) {
+                    Storage::disk('public')->delete($lesson->$file);
                 }
-            }
-
-            if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
-                Storage::disk('public')->delete($lesson->video);
-            }
-
-            if ($lesson->image && Storage::disk('public')->exists($lesson->image)) {
-                Storage::disk('public')->delete($lesson->image);
-            }
-
-            if ($lesson->voice && Storage::disk('public')->exists($lesson->voice)) {
-                Storage::disk('public')->delete($lesson->voice);
-            }
-
-            if ($lesson->pdf && Storage::disk('public')->exists($lesson->pdf)) {
-                Storage::disk('public')->delete($lesson->pdf);
             }
 
             $lesson->delete();
@@ -261,4 +200,5 @@ class LessonController extends Controller
 
         return redirect()->route('lessons.index');
     }
+
 }

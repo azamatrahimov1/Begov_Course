@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="video" class="form-label">Video</label>
-                                    <input type="text" id="dobExLarge" name="video" class="form-control"
+                                    <input type="file" id="dobExLarge" name="video" class="form-control"
                                            value="{{ old('video') }}" required/>
                                 </div>
                             </div>
@@ -84,9 +84,8 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="image" class="form-label">Fotosurat</label>
-                                    <input type="file" id="dobExLarge" name="image" class="form-control"
-                                           value="{{ old('image') }}" required/>
+                                    <label for="photos" class="form-label">Fotosuratlar</label>
+                                    <input type="file" id="dobExLarge" name="photos[]" class="form-control" multiple required value="{{ old('photos') }}"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -126,6 +125,7 @@
                             <button type="submit" class="btn btn-primary">Saqlash</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

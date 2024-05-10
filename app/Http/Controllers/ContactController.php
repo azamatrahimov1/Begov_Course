@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\MessageCreate;
 use App\Models\About;
 use App\Models\Contact;
+use App\Models\Logo;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -13,8 +14,9 @@ class ContactController extends Controller
     {
         $contacts = Contact::all();
         $abouts = About::all();
+        $logos = Logo::all();
 
-        return view('contact', compact('contacts', 'abouts'));
+        return view('contact', compact('contacts', 'abouts', 'logos'));
     }
 
     public function store(Request $request)

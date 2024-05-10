@@ -22,15 +22,15 @@ class UpdateLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'name_video' => 'required',
-            'video' => 'required',
-            'name_image' => 'required',
-            'image' => 'required|mimes:png,jpg,webp',
-            'voice' => 'required|mimes:mp3,ogg,wav,flac,aac',
-            'pdf' => 'required|mimes:docx,pdf',
-            'homework' => 'required',
-            'answer' => 'required',
+            'name' => 'string',
+            'name_video' => 'string',
+            'video' => 'file|mimetypes:video/mp4,video/avi,video/mpeg',
+            'name_image' => 'string',
+            'image' => 'image|mimes:png,jpg,webp',
+            'voice' => 'mimes:mp3,ogg,wav,flac,aac',
+            'pdf' => 'mimes:docx,pdf',
+            'homework' => 'string',
+            'answer' => 'string',
         ];
     }
 }

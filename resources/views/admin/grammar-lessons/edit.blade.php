@@ -30,7 +30,7 @@
 
                 <div class="mb-3">
                     <label for="video" class="form-label">Video</label>
-                    <input type="text" class="form-control mb-1" name="video"
+                    <input type="file" class="form-control mb-1" name="video"
                            value="{{ old('video', $lesson->video) }}">
                     @error('video')
                     <div class="alert alert-danger">{{ $message }}</div>
