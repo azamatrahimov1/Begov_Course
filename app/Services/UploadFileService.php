@@ -9,7 +9,7 @@ class UploadFileService
     public static function uploadFile($file, $path)
     {
         $fileName = time() .'.'.$file->getClientOriginalExtension();
-        $filePath = $file->storeAs($path, $fileName);
+        $filePath = $file->storeAs( $path, $fileName, 'public');
         return $filePath;
     }
 
