@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMainScreenRequest;
 use App\Http\Requests\UpdateMainScreenRequest;
 use App\Models\Logo;
+use App\Services\UploadFileService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,9 +25,7 @@ class LogoController extends Controller
             $data = new Logo();
 
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-
-                $filename = $file->store('images', 'public');
+                $filename = UploadFileService::uploadFile($request->file('image'), 'images');
 
                 $data->fill([
                     'title' => $request->title,
@@ -51,13 +50,10 @@ class LogoController extends Controller
             $validatedData = $request->validated();
 
             if ($request->hasFile('image')) {
-                $filename = $request->file('image')->store('images', 'public');
-
-                if ($logo->image) {
-                    Storage::disk('public')->delete($logo->image);
+                if ($logo->image && Storage::disk('public')->exists($logo->image)) {
+                    UploadFileService::deleteFile($logo->image);
                 }
-
-                $validatedData['image'] = $filename;
+                $validatedData['image'] = UploadFileService::uploadFile($request->file('image'), 'images');
                 $validatedData['title'] = $request->title;
             }
 
