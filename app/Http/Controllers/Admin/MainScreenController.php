@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMainScreenRequest;
 use App\Http\Requests\UpdateMainScreenRequest;
 use App\Models\MainScreen;
+use App\Services\UploadFileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -24,10 +25,7 @@ class MainScreenController extends Controller
             $data = new MainScreen();
 
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-
-                // Store the file in the public storage folder
-                $filename = $file->store('images', 'public');
+                $filename = UploadFileService::uploadFile($request->file('image'), 'images');
 
                 $data->fill([
                     'title' => $request->title,
@@ -37,14 +35,12 @@ class MainScreenController extends Controller
 
             return redirect()->route('main-screen.index')->with('success', 'Main Screen created successfully!');
         } catch (\Exception $e) {
-            // Handle errors
             return redirect()->back()->with('error', 'Error creating Main Screen: ' . $e->getMessage());
         }
     }
 
     public function edit(MainScreen $mainScreen)
     {
-        // Нет необходимости повторно извлекать модель
         return view('admin.MainScreen.edit', compact('mainScreen'));
     }
 
@@ -54,13 +50,10 @@ class MainScreenController extends Controller
             $validatedData = $request->validated();
 
             if ($request->hasFile('image')) {
-                $filename = $request->file('image')->store('images', 'public');
-
-                if ($mainScreen->image) {
-                    Storage::disk('public')->delete($mainScreen->image);
+                if ($mainScreen->image && Storage::disk('public')->exists($mainScreen->image)) {
+                    UploadFileService::deleteFile($mainScreen->image);
                 }
-
-                $validatedData['image'] = $filename;
+                $validatedData['image'] = UploadFileService::uploadFile($request->file('image'), 'images');
                 $validatedData['title'] = $request->title;
             }
 
@@ -79,15 +72,13 @@ class MainScreenController extends Controller
         try {
 
             if ($mainScreen->image) {
-                Storage::disk('public')->delete($mainScreen->image);
+                UploadFileService::deleteFile($mainScreen->image);
             }
 
-            // Delete the MainScreen record from the database
             $mainScreen->delete();
 
             return redirect()->route('main-screen.index')->with('success', 'Main Screen deleted successfully!');
         } catch (\Exception $e) {
-            // Handle errors
             return redirect()->back()->with('error', 'Error deleting Main Screen: ' . $e->getMessage());
         }
     }

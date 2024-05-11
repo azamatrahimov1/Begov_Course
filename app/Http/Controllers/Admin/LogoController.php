@@ -72,7 +72,7 @@ class LogoController extends Controller
         try {
 
             if ($logo->image) {
-                Storage::disk('public')->delete($logo->image);
+                UploadFileService::deleteFile($logo->image);
             }
 
             $logo->delete();
