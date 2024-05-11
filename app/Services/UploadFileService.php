@@ -8,20 +8,15 @@ class UploadFileService
 {
     public static function uploadFile($file, $path)
     {
-        // Generate a unique filename with a timestamp and the file's original extension
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-
-        // Store the file in the specified path with the generated filename
+        $fileName = time() .'.'.$file->getClientOriginalExtension();
         $filePath = $file->storeAs($path, $fileName);
-
-        // Return the file path for reference
         return $filePath;
     }
 
     public static function deleteFile($path)
     {
-        if (Storage::exists($path))
-            Storage::delete($path);
+        if (Storage::disk('public')->exists($path))
+            Storage::disk('public')->delete($path);
         else
             return false;
         return true;
