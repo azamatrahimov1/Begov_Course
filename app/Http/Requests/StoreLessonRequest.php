@@ -24,8 +24,9 @@ class StoreLessonRequest extends FormRequest
         return [
             'name' => 'required',
             'name_video' => 'required',
-            'video' => 'required',
+            'video' => 'required|file|mimes:mp4,avi,mov',
             'name_image' => 'required',
+            'photos' => 'required',
             'voice' => 'required|mimes:mp3,ogg,wav,flac,aac',
             'pdf' => 'required|mimes:docx,pdf',
             'homework' => 'required',

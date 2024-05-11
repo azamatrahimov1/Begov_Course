@@ -24,9 +24,8 @@ class UpdateLessonRequest extends FormRequest
         return [
             'name' => 'string',
             'name_video' => 'string',
-            'video' => 'file|mimetypes:video/mp4,video/avi,video/mpeg',
+            'video' => 'file',
             'name_image' => 'string',
-            'image' => 'image|mimes:png,jpg,webp',
             'voice' => 'mimes:mp3,ogg,wav,flac,aac',
             'pdf' => 'mimes:docx,pdf',
             'homework' => 'string',

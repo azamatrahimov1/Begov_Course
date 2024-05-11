@@ -50,14 +50,14 @@ class LessonController extends Controller
             ]);
 
             if ($request->hasFile('photos')) {
-                $photos = $this->getPhotos($request->photos, $lesson->id);
+                $photos = $this->storePhotos($request->photos, $lesson->id);
 
                 $lesson->photos()->insert($photos);
             }
 
             return redirect()->route('lessons.index')->with('success', 'Lesson created successfully!');
         } catch (\Exception $e) {
-            \Log::error('Error creating lesson: ' . $e->getMessage(), [
+            Log::error('Error creating lesson: ' . $e->getMessage(), [
                 'exception' => $e,
                 'request_data' => $request->all(),
             ]);
@@ -66,26 +66,12 @@ class LessonController extends Controller
         }
     }
 
-    public function getPhotos($data, $lessonId)
-    {
-        $photos = [];
-        foreach ($data as $photo) {
-            $photoPath = $photo->store('lesson_photos', 'public');
-
-            $photos[] = [
-                'path' => $photoPath,
-                'lesson_id' => $lessonId,
-            ];
-        }
-        return $photos;
-    }
-
     public function show(Lesson $lesson)
     {
         return view('admin.grammar-lessons.show', compact('lesson'));
     }
 
-    public function edit(Lesson $lesson, $id)
+    public function edit($id)
     {
         $lesson = Lesson::with('photos')->findOrFail($id);
 
@@ -96,16 +82,6 @@ class LessonController extends Controller
     {
         try {
             $validatedData = $request->validated();
-
-            $homework = $request->homework;
-            $processedHomework = $docService->processHTML($homework);
-
-            $validatedData['homework'] = $homework;
-
-            $answer = $request->answer;
-            $processedAnswer = $docService->processHTML($answer);
-
-            $validatedData['answer'] = $processedAnswer;
 
             if ($request->hasFile('video')) {
                 $newVideo = $request->file('video')->store('videos', 'public');
@@ -123,12 +99,11 @@ class LessonController extends Controller
                 $validatedData['pdf'] = $newPdf;
             }
 
-            if ($request->hasFile('image')) {
-                $newImage = $request->file('image')->store('images', 'public');
-                if ($lesson->image && Storage::disk('public')->exists($lesson->image)) {
-                    Storage::disk('public')->delete($lesson->image);
-                }
-                $validatedData['image'] = $newImage;
+            if ($request->hasFile('photos')) {
+                $this->deletePhotos($lesson->id);
+
+                $photos = $this->storePhotos($request->file('photos'), $lesson->id);
+                $lesson->photos()->insert($photos);
             }
 
             if ($request->hasFile('voice')) {
@@ -146,16 +121,33 @@ class LessonController extends Controller
             return redirect()->back()->with('error', 'Error updating lesson: ' . $e->getMessage());
         }
     }
+    public function deletePhotos($lessonId)
+    {
+        $photos = Photo::where('lesson_id', $lessonId)->get();
 
+        foreach ($photos as $photo) {
+            if (Storage::disk('public')->exists($photo['path'])) {
+                Storage::disk('public')->delete($photo['path']);
+            }
+        }
+    }
+
+    public function storePhotos($data, $lessonId)
+    {
+        $photos = [];
+        foreach ($data as $photo) {
+            $photoPath = $photo->store('images', 'public');
+
+            $photos[] = [
+                'path' => $photoPath,
+                'lesson_id' => $lessonId,
+            ];
+        }
+        return $photos;
+    }
     public function destroy(Lesson $lesson, DOMDocumentService $docService)
     {
         try {
-            $lesson = Lesson::find($lesson->id);
-
-            if (!$lesson) {
-                return redirect()->route('lessons.index')->with('error', 'Lesson not found.');
-            }
-
             if (!empty($lesson->homework)) {
                 $docService->delete($lesson->homework);
             }
@@ -164,24 +156,31 @@ class LessonController extends Controller
                 $docService->delete($lesson->answer);
             }
 
-            $mediaFiles = ['video', 'image', 'voice', 'pdf'];
-            foreach ($mediaFiles as $file) {
-                if ($lesson->$file && Storage::disk('public')->exists($lesson->$file)) {
-                    Storage::disk('public')->delete($lesson->$file);
-                }
+            if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
+                Storage::disk('public')->delete($lesson->video);
             }
+
+            if ($lesson->voice && Storage::disk('public')->exists($lesson->voice)) {
+                Storage::disk('public')->delete($lesson->voice);
+            }
+
+            if ($lesson->pdf && Storage::disk('public')->exists($lesson->pdf)) {
+                Storage::disk('public')->delete($lesson->pdf);
+            }
+
+            $this->deletePhotos($lesson->id);
 
             $lesson->delete();
 
             return redirect()->route('lessons.index')->with('success', 'Lesson deleted successfully!');
         } catch (\Exception $e) {
-            if ($lesson->exists) {
-                Log::error('Error deleting files for lesson ' . $lesson->id . ': ' . $e->getMessage());
-            }
+            Log::error('Error deleting lesson ' . $lesson->id . ': ' . $e->getMessage());
 
             return redirect()->back()->with('error', 'Error deleting lesson: ' . $e->getMessage());
         }
     }
+
+
 
     public function like(Lesson $lesson)
     {

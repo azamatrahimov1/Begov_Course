@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="name_image" class="form-label">Fotosurat Nomi</label>
+                    <label for="name_image" class="form-label">Fotosurat(lar) Nomi</label>
                     <input type="text" class="form-control" name="name_image"
                            value="{{ old('name_image', $lesson->name_image) }}">
                     @error('name_image')
@@ -48,14 +48,17 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Fotosurat</label>
-                    <input type="file" class="form-control mb-1" name="image"
-                           value="{{ old('image', $lesson->image) }}">
+                    <label for="photos" class="form-label">Fotosurat(lar)</label>
+                    <input type="file" class="form-control mb-1" name="photos[]" multiple
+                           value="{{ old('photos', $lesson->photos) }}">
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    @if($lesson->image)
-                        <img src="{{ asset('storage/'.$lesson->image) }}" width="95">
+                    @php
+                        $firstPhoto = $lesson->photos->first();
+                    @endphp
+                    @if($lesson->photos)
+                        <img src="{{ asset('storage/'. $firstPhoto->path) }}" width="95">
                     @endif
                 </div>
 

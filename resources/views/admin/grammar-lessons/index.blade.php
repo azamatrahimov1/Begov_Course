@@ -21,7 +21,7 @@
     @error('name_image')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
-    @error('image')
+    @error('photos')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
     @error('voice')
@@ -84,7 +84,7 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="photos" class="form-label">Fotosuratlar</label>
+                                    <label for="photos" class="form-label">Fotosurat(lar)</label>
                                     <input type="file" id="dobExLarge" name="photos[]" class="form-control" multiple required value="{{ old('photos') }}"/>
                                 </div>
                             </div>
