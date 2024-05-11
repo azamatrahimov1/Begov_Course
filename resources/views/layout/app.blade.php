@@ -48,7 +48,7 @@
     <a href="#" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         @foreach($logos as $logo)
             <img src="{{ asset('storage/'. $logo->image) }}" style="border-radius: 50%; width: 50px; height: 50px;">
-            <h2 class="m-0 text-primary">{{ $logo->title }}</h2>
+            <h2 class="m-1 text-primary">{{ $logo->title }}</h2>
         @endforeach
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

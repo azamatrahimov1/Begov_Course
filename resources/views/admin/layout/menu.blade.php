@@ -143,15 +143,15 @@
                 @php
                     $lessons = \App\Models\Lesson::all();
                 @endphp
-                @foreach($lessons as $lesson)
-                    <ul class="menu-sub">
-                        <li class="menu-item @if(Route::Is('lessons.show', ['lesson' => $lesson->id])) active @endif">
+                <ul class="menu-sub">
+                    @foreach($lessons as $lesson)
+                        <li class="menu-item @if(Route::is('lessons.show') && request()->route('lesson')->id == $lesson->id) active @endif">
                             <a href="{{ route('lessons.show', ['lesson' => $lesson->id]) }}" class="menu-link">
                                 <div data-i18n="Without menu">{{ $lesson->name }}</div>
                             </a>
                         </li>
-                    </ul>
-                @endforeach
+                    @endforeach
+                </ul>
             </li>
         @endif
     </ul>
