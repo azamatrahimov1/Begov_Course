@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateLessonRequest;
 use App\Models\Lesson;
 use App\Models\Photo;
 use App\Services\DOMDocumentService;
+use App\Services\UploadFileService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -34,9 +35,9 @@ class LessonController extends Controller
             $processedHomework = $docService->processHTML($request->homework);
             $processedAnswer = $docService->processHTML($request->answer);
 
-            $videoPath = $request->file('video')->store('videos', 'public');
-            $voicePath = $request->file('voice')->store('voices', 'public');
-            $pdfPath = $request->file('pdf')->store('files', 'public');
+            $videoPath = UploadFileService::uploadFile($request->file('video'), 'videos');
+            $voicePath = UploadFileService::uploadFile($request->file('voice'), 'voices');
+            $pdfPath = UploadFileService::uploadFile($request->file('pdf'), 'files');
 
             $lesson = Lesson::create([
                 'name' => $validatedData['name'],
@@ -84,34 +85,30 @@ class LessonController extends Controller
             $validatedData = $request->validated();
 
             if ($request->hasFile('video')) {
-                $newVideo = $request->file('video')->store('videos', 'public');
                 if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
-                    Storage::disk('public')->delete($lesson->video);
+                    UploadFileService::deleteFile($lesson->video);
                 }
-                $validatedData['video'] = $newVideo;
+                $validatedData['video'] = UploadFileService::uploadFile($request->file('video'), 'videos');
             }
 
             if ($request->hasFile('pdf')) {
-                $newPdf = $request->file('pdf')->store('files', 'public');
                 if ($lesson->pdf && Storage::disk('public')->exists($lesson->pdf)) {
-                    Storage::disk('public')->delete($lesson->pdf);
+                    UploadFileService::deleteFile($lesson->pdf);
                 }
-                $validatedData['pdf'] = $newPdf;
+                $validatedData['pdf'] = UploadFileService::uploadFile($request->file('pdf'), 'files');
+            }
+
+            if ($request->hasFile('voice')) {
+                if ($lesson->voice && Storage::disk('public')->exists($lesson->voice)) {
+                    UploadFileService::deleteFile($lesson->voice);
+                }
+                $validatedData['voice'] = UploadFileService::uploadFile($request->file('voice'), 'voices');
             }
 
             if ($request->hasFile('photos')) {
                 $this->deletePhotos($lesson->id);
-
                 $photos = $this->storePhotos($request->file('photos'), $lesson->id);
                 $lesson->photos()->insert($photos);
-            }
-
-            if ($request->hasFile('voice')) {
-                $newVoice = $request->file('voice')->store('voices', 'public');
-                if ($lesson->voice && Storage::disk('public')->exists($lesson->voice)) {
-                    Storage::disk('public')->delete($lesson->voice);
-                }
-                $validatedData['voice'] = $newVoice;
             }
 
             $lesson->update($validatedData);
@@ -121,6 +118,8 @@ class LessonController extends Controller
             return redirect()->back()->with('error', 'Error updating lesson: ' . $e->getMessage());
         }
     }
+
+
     public function deletePhotos($lessonId)
     {
         $photos = Photo::where('lesson_id', $lessonId)->get();
@@ -156,16 +155,16 @@ class LessonController extends Controller
                 $docService->delete($lesson->answer);
             }
 
-            if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
-                Storage::disk('public')->delete($lesson->video);
+            if ($lesson->video) {
+                UploadFileService::deleteFile($lesson->video);
             }
 
-            if ($lesson->voice && Storage::disk('public')->exists($lesson->voice)) {
-                Storage::disk('public')->delete($lesson->voice);
+            if ($lesson->voice) {
+                UploadFileService::deleteFile($lesson->voice);
             }
 
-            if ($lesson->pdf && Storage::disk('public')->exists($lesson->pdf)) {
-                Storage::disk('public')->delete($lesson->pdf);
+            if ($lesson->pdf) {
+                UploadFileService::deleteFile($lesson->pdf);
             }
 
             $this->deletePhotos($lesson->id);
