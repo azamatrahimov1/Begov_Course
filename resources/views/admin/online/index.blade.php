@@ -2,12 +2,8 @@
 @section('content')
 
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Darslar Turi/</span> Onlayn Dars</h4>
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <strong>Success!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+
+    @include('admin.success-alert')
 
     @error('image')
     <div class="alert alert-danger">{{ $message }}</div>
