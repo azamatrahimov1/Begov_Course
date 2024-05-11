@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTypeOfLessonRequest;
 use App\Http\Requests\UpdateTypeOfLessonRequest;
 use App\Models\Online;
 use App\Services\DOMDocumentService;
+use App\Services\UploadFileService;
 use DOMDocument;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,7 @@ class OnlineController extends Controller
 
             $validatedData['desc'] = $processedDesc;
 
-            $ImagePath = $request->file('image')->store('images', 'public');
+            $ImagePath = UploadFileService::uploadFile($request->file('image'), 'images');
 
             Online::create([
                 'title' => $validatedData['title'],
@@ -61,11 +62,10 @@ class OnlineController extends Controller
             $validatedData['desc'] = $processedDesc;
 
             if ($request->hasFile('image')) {
-                $newImage = $request->file('image')->store('images', 'public');
                 if ($online->image && Storage::disk('public')->exists($online->image)) {
-                    Storage::disk('public')->delete($online->image);
+                    UploadFileService::deleteFile($online->image);
                 }
-                $validatedData['image'] = $newImage;
+                $validatedData['image'] = UploadFileService::uploadFile($request->file('image'), 'images');
             }
 
             $online->update($validatedData);
@@ -89,8 +89,8 @@ class OnlineController extends Controller
                 $docService->delete($lesson->desc);
             }
 
-            if ($online->image && Storage::disk('public')->exists($online->image)) {
-                Storage::disk('public')->delete($online->image);
+            if ($online->image) {
+                UploadFileService::deleteFile($online->image);
             }
 
             $online->delete();

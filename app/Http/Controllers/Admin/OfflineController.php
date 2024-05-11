@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTypeOfLessonRequest;
 use App\Http\Requests\UpdateTypeOfLessonRequest;
 use App\Models\Offline;
 use App\Services\DOMDocumentService;
+use App\Services\UploadFileService;
 use DOMDocument;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,7 @@ class OfflineController extends Controller
             $desc = $request->desc;
             $processedDesc = $docService->processHTML($desc);
 
-            $ImagePath = $request->file('image')->store('images', 'public');
+            $ImagePath = UploadFileService::uploadFile($request->file('image'), 'images');
 
             Offline::create([
                 'title' => $validatedData['title'],
@@ -38,7 +39,6 @@ class OfflineController extends Controller
 
             return redirect()->route('offline.index')->with('success', 'Offline lesson created successfully!');
         } catch (\Exception $e) {
-            // Handle errors
             return redirect()->back()->with('error', 'Error creating offline lesson: ' . $e->getMessage());
         }
     }
@@ -59,22 +59,18 @@ class OfflineController extends Controller
             $validatedData['desc'] = $processedDesc;
 
             if ($request->hasFile('image')) {
-                $newImage = $request->file('image')->store('images', 'public');
                 if ($offline->image && Storage::disk('public')->exists($offline->image)) {
-                    Storage::disk('public')->delete($offline->image);
+                    UploadFileService::deleteFile($offline->image);
                 }
-                $validatedData['image'] = $newImage;
+                $validatedData['image'] = UploadFileService::uploadFile($request->file('image'), 'images');
             }
 
-            // Обновление данных модели
             $offline->update($validatedData);
 
             return redirect()->route('offline.index')->with('success', 'Offline lesson updated successfully!');
         } catch (\Exception $e) {
-            // Log the error for debugging purposes
             Log::error('Error updating Offline lesson: ' . $e->getMessage());
 
-            // Redirect back with an error message
             return redirect()->back()->with('error', 'Error updating offline lesson. Please check the logs for details.');
         }
     }
@@ -90,8 +86,8 @@ class OfflineController extends Controller
                 $docService->delete($lesson->desc);
             }
 
-            if ($offline->image && Storage::disk('public')->exists($offline->image)) {
-                Storage::disk('public')->delete($offline->image);
+            if ($offline->image) {
+                UploadFileService::deleteFile($offline->image);
             }
 
             $offline->delete();
