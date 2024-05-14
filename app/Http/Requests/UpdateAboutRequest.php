@@ -22,9 +22,9 @@ class UpdateAboutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'desc' => 'required',
-            'address' => 'required',
-//            'telegram_account' => 'required|unique:abouts',
+            'desc' => 'text',
+            'address' => 'unique:about',
+            'telegram_account' => 'unique:abouts',
         ];
     }
 }

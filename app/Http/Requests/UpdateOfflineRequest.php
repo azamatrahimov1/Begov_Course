@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreChapterRequest extends FormRequest
+class UpdateOfflineRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class StoreChapterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'parent_id' => 'required|numeric'
+            'title' => 'string',
+            'image' => 'file|mimes:jpg,png,webp,jpeg',
+            'desc' => 'string',
         ];
     }
 }

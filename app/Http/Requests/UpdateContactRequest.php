@@ -22,9 +22,9 @@ class UpdateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => 'required',
-            'phone_number' => 'required|unique:contacts',
-            'desc' => 'required',
+            'full_name' => 'string',
+            'phone_number' => 'unique:contacts',
+            'desc' => 'string',
         ];
     }
 }

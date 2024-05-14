@@ -23,7 +23,7 @@ class UpdateMainScreenRequest extends FormRequest
     {
         return [
             'title' => 'string',
-            'image' => 'image',
+            'image' => 'file|mimes:jpg,png,webp,jpeg',
         ];
     }
 }

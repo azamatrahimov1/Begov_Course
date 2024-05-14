@@ -22,7 +22,7 @@ class StoreMainScreenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'required|image',
+            'image' => 'required|file|mimes:jpg,png,webp,jpeg',
         ];
     }
 }
