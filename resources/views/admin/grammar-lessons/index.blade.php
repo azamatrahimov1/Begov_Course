@@ -81,7 +81,8 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="photos" class="form-label">Fotosurat(lar)</label>
-                                    <input type="file" id="dobExLarge" name="photos[]" class="form-control" multiple required value="{{ old('photos') }}"/>
+                                    <input type="file" id="dobExLarge" name="photos[]" class="form-control" multiple
+                                           required value="{{ old('photos') }}"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -100,7 +101,7 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="homework" class="form-label">Yu Vazifasi</label>
+                                    <label for="homework" class="form-label">Uy Vazifasi</label>
                                     <textarea name="homework" id="tinymce" class="form-control"
                                               rows="5">{{ old('homework') }}</textarea>
                                 </div>
@@ -157,24 +158,45 @@
                             <div class="d-flex">
                                 @if(auth()->user()->can('show-grammar-lessons'))
                                     <a href="{{ route('lessons.show', $lesson->id) }}"
-                                       class="btn btn-info me-2"><i class="bx bx-show"></i></a>
+                                       class="btn btn-icon btn-info me-2"><i class="bx bx-show"></i></a>
                                 @endif
                                 @if(auth()->user()->can('edit'))
                                     <a href="{{ route('lessons.edit', ['lesson' => $lesson->id]) }}"
-                                       class="btn btn-warning me-2"><i class="bx bx-pencil"></i></a>
+                                       class="btn btn-icon btn-warning me-2"><i class="bx bx-pencil"></i></a>
                                 @endif
                                 @if(auth()->user()->can('delete'))
-                                    <form action="{{ route('lessons.destroy', ['lesson' => $lesson->id]) }}"
-                                          method="POST"
-                                          id="form-delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                                class="btn btn-danger me-2"
-                                                onclick="delete_button({{$lesson->id}})">
-                                            <i class="bx bx-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-icon btn-danger me-2"
+                                            data-bs-toggle="modal" data-bs-target="#modalToggle{{$lesson->id}}">
+                                        <i class="bx bx-trash-alt"></i></button>
+
+                                    <div class="modal fade" id="modalToggle{{$lesson->id}}"
+                                         aria-labelledby="modalToggleLabel{{$lesson->id}}" tabindex="-1"
+                                         style="display: none" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalToggleLabel{{$lesson->id}}">
+                                                        Buni qaytara olmaysiz!</h5>
+                                                    <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">{{ $lesson->name }}</div>
+                                                <div class="modal-footer">
+                                                    <form
+                                                        action="{{ route('lessons.destroy', ['lesson' => $lesson->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">O'chirish
+                                                        </button>
+                                                    </form>
+                                                    <button class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal">Ortga
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                                 @if(Auth::user()->likesLesson($lesson))
                                     <form action="{{ route('lessons.unlike', $lesson->id) }}" method="POST">
@@ -202,27 +224,6 @@
 @endsection
 
 @section('script')
-    <script>
-        form = document.getElementById('form-delete');
-
-        function delete_button(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.action = '/lessons/' + id;
-                    form.submit()
-                }
-            })
-        }
-
-    </script>
 
 @endsection
 

@@ -94,19 +94,41 @@
                         <td>{{$role->name}}</td>
                         <td>
                             <div class="d-flex">
-                                <a class="btn btn-warning me-2"
+                                <a class="btn btn-icon btn-warning me-2"
                                    href="{{ route('role.edit', ['role' => $role->id]) }}"
-                                ><i class="bx bx-pencil me-2"></i></a>
-                                <form action="{{ route('role.destroy', ['role' => $role->id]) }}" method="POST"
-                                      id="form-delete">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button"
-                                            class="btn btn-danger"
-                                            onclick="delete_button({{$role->id}})">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </button>
-                                </form>
+                                ><i class="bx bx-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-icon btn-danger me-2"
+                                        data-bs-toggle="modal" data-bs-target="#modalToggle{{$role->id}}">
+                                    <i class="bx bx-trash-alt"></i></button>
+
+                                <div class="modal fade" id="modalToggle{{$role->id}}"
+                                     aria-labelledby="modalToggleLabel{{$role->id}}" tabindex="-1"
+                                     style="display: none" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalToggleLabel{{$role->id}}">
+                                                    Buni qaytara olmaysiz!</h5>
+                                                <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">{{ $role->name }}</div>
+                                            <div class="modal-footer">
+                                                <form action="{{ route('role.destroy', ['role' => $role->id]) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">O'chirish
+                                                    </button>
+                                                </form>
+                                                <button class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">Ortga
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>

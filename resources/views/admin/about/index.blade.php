@@ -102,19 +102,41 @@
                             <div class="d-flex">
                                 @if(auth()->user()->can('edit'))
                                     <a href="{{ route('abouts.edit', $about->id) }}"
-                                       class="btn btn-warning me-2"><i class="bx bx-pencil me-2"></i></a>
+                                       class="btn btn-icon btn-warning me-2"><i class="bx bx-pencil"></i></a>
                                 @endif
+
                                 @if(auth()->user()->can('delete'))
-                                    <form action="{{ route('abouts.destroy', $about->id) }}" method="POST"
-                                          id="form-delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                                class="btn btn-danger"
-                                                onclick="delete_button({{$about->id}})">
-                                            <i class="bx bx-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-icon btn-danger me-2"
+                                            data-bs-toggle="modal" data-bs-target="#modalToggle{{$about->id}}">
+                                        <i class="bx bx-trash-alt"></i></button>
+
+                                    <div class="modal fade" id="modalToggle{{$about->id}}"
+                                         aria-labelledby="modalToggleLabel{{$about->id}}" tabindex="-1"
+                                         style="display: none" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalToggleLabel{{$about->id}}">
+                                                        Buni qaytara olmaysiz!</h5>
+                                                    <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">{{ $about->address }}</div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ route('abouts.destroy', $about->id) }}"
+                                                          method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">O'chirish
+                                                        </button>
+                                                    </form>
+                                                    <button class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal">Ortga
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                         </td>
@@ -128,26 +150,5 @@
 @endsection
 
 @section('script')
-    <script>
-        form = document.getElementById('form-delete');
-
-        function delete_button(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.action = '/abouts/' + id;
-                    form.submit()
-                }
-            })
-        }
-
-    </script>
 
 @endsection

@@ -18,9 +18,7 @@ class DOMDocumentService
             $src = $img->getAttribute('src');
             if (strpos($src, 'base64,') !== false) {
                 $data = base64_decode(explode(',', explode(';', $src)[1])[1]);
-                $extensions = ['jpeg', 'png', 'webp', 'jpg'];
-                $randomExtension = $extensions[array_rand($extensions)];
-                $image_name = "/storage/images/" . time() . $key . $randomExtension;
+                $image_name = "/storage/images/" . time() . $key . '.jpeg';
                 file_put_contents(public_path($image_name), $data);
 
                 $img->setAttribute('src', $image_name);
@@ -46,4 +44,5 @@ class DOMDocumentService
             }
         }
     }
+
 }

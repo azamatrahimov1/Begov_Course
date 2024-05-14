@@ -16,10 +16,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Fotosurat</label>
-                    <input type="file" class="form-control" name="image" value="{{ old('image', $online->image) }}" required>
+                    <input type="file" class="form-control" name="image" value="{{ old('image', $online->image) }}">
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Narx</label>
+                    <input type="number" class="form-control" name="price" value="{{ old('price', $online->price) }}">
                 </div>
                 <div class="mb-3">
                     <label for="desc" class="form-label">Answer:</label>

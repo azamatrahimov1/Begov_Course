@@ -9,6 +9,7 @@
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 
+    @if(auth()->user()->can('create'))
     <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -60,6 +61,7 @@
         ><i class="bx bx-plus me-1"></i>
         </button>
     </div>
+    @endif
 
     <div class="card">
         <div class="table-responsive text-nowrap">
@@ -80,17 +82,7 @@
                         <td>{{$i++}}</td>
                         <td>{{$mainScreen->title}}</td>
                         <td>
-                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                <li
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#imageModal{{$mainScreen->id}}"
-                                    data-bs-placement="top"
-                                    class="avatar avatar-md pull-up"
-                                >
-                                    <img src="{{ asset('storage/'.$mainScreen->image) }}" class="rounded-circle"/>
-                                </li>
-                            </ul>
-
+                            <img src="{{ asset('storage/'. $mainScreen->image) }}" style="height: 100px; width: 100px"/>
                         </td>
                         <td>
                             <div class="d-flex">
@@ -99,17 +91,36 @@
                                        class="btn btn-icon btn-warning me-2"><i class="bx bx-pencil me-2"></i></a>
                                 @endif
                                 @if(auth()->user()->can('delete'))
-                                    <form
-                                        action="{{ route('main-screen.destroy', ['main_screen' => $mainScreen->id]) }}"
-                                        method="POST" id="form-delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                                class="btn btn-icon btn-danger"
-                                                onclick="delete_button({{$mainScreen->id}})">
-                                            <i class="bx bx-trash-alt"></i>
+                                        <button type="button" class="btn btn-icon btn-danger me-2" data-bs-toggle="modal"
+                                                data-bs-target="#modalToggle{{$mainScreen->id}}"><i class="bx bx-trash-alt"></i>
                                         </button>
-                                    </form>
+
+                                        <div class="modal fade" id="modalToggle{{$mainScreen->id}}"
+                                             aria-labelledby="modalToggleLabel{{$mainScreen->id}}" tabindex="-1"
+                                             style="display: none" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalToggleLabel{{$mainScreen->id}}">Buni
+                                                            qaytara olmaysiz!</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">{{ $mainScreen->title }}</div>
+                                                    <div class="modal-footer">
+                                                        <form action="{{ route('main-screen.destroy', ['main_screen' => $mainScreen->id]) }}"
+                                                              method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">O'chirish</button>
+                                                        </form>
+                                                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                            Ortga
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                 @endif
                             </div>
                         </td>

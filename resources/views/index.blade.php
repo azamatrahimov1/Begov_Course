@@ -15,7 +15,12 @@
                                     <h5 class="text-primary text-white mb-3 animated slideInDown">Best Online
                                         Courses</h5>
                                     <h1 class="display-3 text-white animated slideInDown">{{ $item->title }}</h1>
-                                    <a href="{{ route('register') }}" class="btn btn-light py-md-3 px-md-5 animated slideInRight"> Start Today</a>
+                                    <a href="https://checkout.paycom.uz" class="btn btn-light py-md-3 px-md-5 animated slideInRight"> Start Today</a>
+{{--                                    <form action="{{ route('register') }}" >--}}
+{{--                                        @csrf--}}
+{{--                                        <input type="hidden" name="amount" value="{{ $o_course->price }}">--}}
+{{--                                        <button class="btn btn-light py-md-3 px-md-5 animated slideInRight">Start Today</button>--}}
+{{--                                    </form>--}}
                                 </div>
                             </div>
                         </div>

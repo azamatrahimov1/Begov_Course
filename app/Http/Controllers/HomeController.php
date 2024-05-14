@@ -7,6 +7,7 @@ use App\Models\Logo;
 use App\Models\MainScreen;
 use App\Models\Offline;
 use App\Models\Online;
+use App\Models\Order;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
     {
         $mainScreens = MainScreen::all();
         $abouts = About::all();
-        $onlines = Online::all();
+        $onlines = Order::all();
         $offlines = Offline::all();
         $logos = Logo::all();
 

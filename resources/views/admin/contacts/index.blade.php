@@ -27,17 +27,36 @@
                         <td>{{$contact->phone_number}}</td>
                         <td>{{$contact->desc}}</td>
                         <td>
-                            <div class="d-flex">
-                                <form action="{{ route('contacts.destroy', ['contact' => $contact->id]) }}" method="POST"
-                                      id="form-delete">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button"
-                                            class="btn btn-danger"
-                                            onclick="delete_button({{$contact->id}})">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </button>
-                                </form>
+                            <button type="button" class="btn btn-icon btn-danger me-2"
+                                    data-bs-toggle="modal" data-bs-target="#modalToggle{{$contact->id}}">
+                                <i class="bx bx-trash-alt"></i></button>
+
+                            <div class="modal fade" id="modalToggle{{$contact->id}}"
+                                 aria-labelledby="modalToggleLabel{{$contact->id}}" tabindex="-1"
+                                 style="display: none" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalToggleLabel{{$contact->id}}">
+                                                Buni qaytara olmaysiz!</h5>
+                                            <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">{{ $contact->full_name }}</div>
+                                        <div class="modal-footer">
+                                            <form action="{{ route('contacts.destroy', ['contact' => $contact->id]) }}"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">O'chirish
+                                                </button>
+                                            </form>
+                                            <button class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal">Ortga
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>

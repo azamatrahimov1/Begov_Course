@@ -43,7 +43,7 @@
 
         <div class="row mb-5">
             <div class="col-md-6 col-lg-8 mx-auto my-auto">
-                <div class="card">
+                <div class="card table-responsive">
                     <div class="row g-0">
                         <div class="col-md-8">
                             <div class="card-body">
@@ -60,7 +60,7 @@
 
         <div class="row mb-5">
             <div class="col-md-6 col-lg-8 mx-auto my-auto">
-                <div class="card">
+                <div class="card table-responsive">
                     <div class="row g-0">
                         <div class="col-md-8">
                             <div class="card-body">

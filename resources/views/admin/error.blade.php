@@ -81,7 +81,7 @@
             </form>
             <div class="mt-3">
                 <img
-                    src="{{ asset('admin_assets/img/illustrations/begov.png') }}"
+                    src="{{ asset('admin_assets/img/illustrations/begov.jpg') }}"
                     alt="page-misc-error-light"
                     width="500"
                     class="img-fluid"
