@@ -5,6 +5,22 @@
 
     @include('admin.success-alert')
 
+    @error('desc')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    @error('address')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    @error('video')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    @error('telegram_account')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    @error('phone_number')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+
     @if(auth()->user()->can('create'))
         <div class="modal fade" id="backDropModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
@@ -18,13 +34,13 @@
                         ></button>
                     </div>
 
-                    <form method="POST" action="{{ route('abouts.store') }}">
+                    <form method="POST" action="{{ route('abouts.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="modal-body">
 
-                            <div class="row">
-                                <div class="col mb-3">
+                            <div class="row mb-3">
+                                <div class="col mb-0">
                                     <label for="desc" class="form-label">Tavsifi</label>
                                     <textarea name="desc" id="tinymce" class="form-control"
                                               rows="5">{{ old('desc') }}</textarea>
@@ -36,6 +52,12 @@
                                     <label for="address" class="form-label">Manzil</label>
                                     <input type="text" id="nameBackdrop" class="form-control" name="address"
                                            value="{{ old('address') }}" required/>
+                                </div>
+                            </div>
+                            <div class="row bm-3">
+                                <div class="col mb-0">
+                                    <label for="video" class="form-label">Video</label>
+                                    <input type="file" id="video" name="video" class="form-control" accept="video/*" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -83,6 +105,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Tavsifi</th>
                     <th scope="col">Address</th>
+                    <th scope="col">Video</th>
                     <th scope="col">Telegram</th>
                     <th scope="col">Phone Number</th>
                 </tr>
@@ -96,6 +119,11 @@
                         <td>{{$i++}}</td>
                         <td>{!! $about->desc !!}</td>
                         <td>{{$about->address}}</td>
+                        <td>
+                            <video style="width: 200px; height: 100px" controls>
+                                <source src="{{ asset('storage/' . $about->video) }}" type="video/mp4">
+                            </video>
+                        </td>
                         <td>{{$about->telegram_account}}</td>
                         <td>{{$about->phone_number}}</td>
                         <td>

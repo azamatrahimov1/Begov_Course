@@ -22,8 +22,9 @@ class UpdateAboutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'desc' => 'text',
-            'address' => 'unique:about',
+            'desc' => 'string',
+            'address' => 'unique:abouts',
+            'video' => 'file|mimes:mp4,avi,mov',
             'telegram_account' => 'unique:abouts',
         ];
     }

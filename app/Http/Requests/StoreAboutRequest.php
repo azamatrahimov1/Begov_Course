@@ -24,6 +24,7 @@ class StoreAboutRequest extends FormRequest
         return [
             'desc' => 'required',
             'address' => 'required',
+            'video' => 'required',
             'telegram_account' => 'required|unique:abouts',
             'phone_number' => 'required|unique:abouts',
         ];

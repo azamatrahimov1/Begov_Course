@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('desc')->nullable();
             $table->string('address');
+            $table->text('video');
             $table->string('telegram_account', 255)->unique();
             $table->string('phone_number', 20);
             $table->timestamps();

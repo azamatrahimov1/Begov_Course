@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAboutRequest;
 use App\Http\Requests\UpdateAboutRequest;
 use App\Models\About;
 use App\Services\DOMDocumentService;
+use App\Services\UploadFileService;
 use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 
 class AboutController extends Controller
@@ -27,26 +29,33 @@ class AboutController extends Controller
         return view('admin.about.show', compact('about'));
     }
 
-    public function create()
-    {
-        return view('admin.about.create');
-    }
-
     public function store(StoreAboutRequest $request, DOMDocumentService $docService)
     {
-        $validatedData = $request->validated();
+        try {
+            $validatedData = $request->validated();
 
-        $description = $request->desc;
-        $processedDesc = $docService->processHTML($description);
+            $description = $request->desc;
+            $processedDesc = $docService->processHTML($description);
 
-        About::create([
-            'desc' => $processedDesc,
-            'address' => $validatedData['address'],
-            'telegram_account' => $validatedData['telegram_account'],
-            'phone_number' => $validatedData['phone_number'],
-        ]);
+            $videoPath = UploadFileService::uploadFile($request->file('video'), 'videos');
 
-        return redirect()->route('abouts.index')->with('success', 'About created successfully!');
+            About::create([
+                'desc' => $processedDesc,
+                'address' => $validatedData['address'],
+                'video' => $videoPath,
+                'telegram_account' => $validatedData['telegram_account'],
+                'phone_number' => $validatedData['phone_number'],
+            ]);
+
+            return redirect()->route('abouts.index')->with('success', 'About created successfully!');
+        } catch (\Exception $e) {
+            Log::error('Error creating about: ' . $e->getMessage(), [
+                'exception' => $e,
+                'request_data' => $request->all(),
+            ]);
+
+            return redirect()->back()->with('error', 'Error creating about: ' . $e->getMessage());
+        }
     }
 
     public function edit(About $about)
@@ -61,12 +70,16 @@ class AboutController extends Controller
         $description = $request->desc;
         $processedDesc = $docService->processHTML($description);
 
-        $about->update([
-            'desc' => $$processedDesc,
-            'address' => $request->address,
-            'telegram_account' => $request->telegram_account,
-            'phone_number' => $request->phone_number,
-        ]);
+        if ($request->hasFile('video')) {
+            if ($about->video && Storage::disk('public')->exists($about->video)) {
+                UploadFileService::deleteFile($about->video);
+            }
+            $validatedData['video'] = UploadFileService::uploadFile($request->file('video'), 'videos');
+        }
+
+        $validatedData['desc'] = $processedDesc;
+
+        $about->update($validatedData);
 
         return redirect()->route('abouts.index')->with('success', 'About updated successfully!');
     }
@@ -82,6 +95,10 @@ class AboutController extends Controller
 
             if (!empty($about->desc)) {
                 $docService->delete($about->desc);
+            }
+
+            if ($about->video) {
+                UploadFileService::deleteFile($about->video);
             }
 
             $about->delete();
