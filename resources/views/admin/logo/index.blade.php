@@ -39,7 +39,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="image" class="form-label">Fotosurat</label>
-                                    <input type="file" name="image" class="form-control"
+                                    <input type="file" name="image" class="form-control" accept="image/*"
                                            value="{{ old('image') }}"/>
                                 </div>
                             </div>

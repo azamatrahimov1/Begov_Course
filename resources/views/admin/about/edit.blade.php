@@ -10,7 +10,7 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Description</label>
+                    <label for="desc" class="form-label">Tavsif</label>
                     <textarea name="desc" id="tinymce" class="form-control" rows="5">{{ old('desc', $about->desc) }}</textarea>
                     @error('desc')
                     <div class="alert alert-danger">{{ $message }}</div>

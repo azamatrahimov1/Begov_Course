@@ -67,7 +67,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="video" class="form-label">Video</label>
-                                    <input type="file" id="dobExLarge" name="video" class="form-control"
+                                    <input type="file" id="dobExLarge" name="video" class="form-control" accept="video/*"
                                            value="{{ old('video') }}" required/>
                                 </div>
                             </div>
@@ -81,21 +81,21 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="photos" class="form-label">Fotosurat(lar)</label>
-                                    <input type="file" id="dobExLarge" name="photos[]" class="form-control" multiple
+                                    <input type="file" id="dobExLarge" name="photos[]" class="form-control" multiple accept="image/*"
                                            required value="{{ old('photos') }}"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="pdf" class="form-label">Docx yoki PDF</label>
-                                    <input type="file" id="emailExLarge" name="pdf" class="form-control"
+                                    <input type="file" id="emailExLarge" name="pdf" class="form-control" accept=".docx,.pdf"
                                            value="{{ old('pdf') }}" required/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="voice" class="form-label">Ovoz</label>
-                                    <input type="file" id="dobExLarge" name="voice" class="form-control"
+                                    <input type="file" id="dobExLarge" name="voice" class="form-control" accept="audio/*"
                                            value="{{ old('voice') }}" required/>
                                 </div>
                             </div>

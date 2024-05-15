@@ -17,7 +17,8 @@
     @error('price')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
-    <!-- Online Lessons -->
+
+    @if(auth()->user()->can('create'))
     <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -44,7 +45,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="image" class="form-label">Fotosurat</label>
-                                <input type="file" name="image" class="form-control"
+                                <input type="file" name="image" class="form-control" accept="image/*"
                                        value="{{ old('image') }}"/>
                             </div>
                         </div>
@@ -82,6 +83,7 @@
         ><i class="bx bx-plus me-1"></i>
         </button>
     </div>
+    @endif
 
     <div class="card">
         <div class="table-responsive text-nowrap">

@@ -5,8 +5,7 @@
 
     <div class="card mb-4">
         <div class="card-body">
-            <form method="POST" action="{{ route('logo.update', $logo->id) }}"
-                  enctype="multipart/form-data">
+            <form method="POST" action="{{ route('logo.update', $logo->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -17,7 +16,7 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Fotosurat</label>
-                    <input type="file" class="form-control" name="image" value="{{ $logo->image }}">
+                    <input type="file" class="form-control" name="image" value="{{ $logo->image }}" accept="image/*">
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror

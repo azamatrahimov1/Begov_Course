@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTypeOfLessonRequest;
-use App\Http\Requests\UpdateTypeOfLessonRequest;
+use App\Http\Requests\StoreOnlineRequest;
+use App\Http\Requests\UpdateOnlineRequest;
 use App\Models\Online;
 use App\Services\DOMDocumentService;
 use App\Services\UploadFileService;
-use DOMDocument;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +21,7 @@ class OnlineController extends Controller
         return view('admin.online.index', compact('onlines'));
     }
 
-    public function store(StoreTypeOfLessonRequest $request, DOMDocumentService $docService)
+    public function store(StoreOnlineRequest $request, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
@@ -34,15 +33,18 @@ class OnlineController extends Controller
 
             $ImagePath = UploadFileService::uploadFile($request->file('image'), 'images');
 
+            $price = (int) str_replace('.',',', '', $request->price);
+
             Online::create([
                 'title' => $validatedData['title'],
+                'price' => $price,
                 'image' => $ImagePath,
                 'desc' => $processedDesc,
             ]);
 
             return redirect()->route('online.index')->with('success', 'Online lesson created successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error creating Online lesson: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error creating online lesson: ' . $e->getMessage());
         }
     }
 
@@ -51,7 +53,7 @@ class OnlineController extends Controller
         return view('admin.online.edit', compact('online'));
     }
 
-    public function update(UpdateTypeOfLessonRequest $request, Online $online, DOMDocumentService $docService)
+    public function update(UpdateOnlineRequest $request, Online $online, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
@@ -68,13 +70,16 @@ class OnlineController extends Controller
                 $validatedData['image'] = UploadFileService::uploadFile($request->file('image'), 'images');
             }
 
+            $price = (int) str_replace('.', '', $request->price);
+            $validatedData['price'] = $price;
+
             $online->update($validatedData);
 
             return redirect()->route('online.index')->with('success', 'Online lesson updated successfully!');
         } catch (\Exception $e) {
-            Log::error('Error updating Online lesson: ' . $e->getMessage());
+            Log::error('Error updating online lesson: ' . $e->getMessage());
 
-            return redirect()->back()->with('error', 'Error updating Main Screen. Please check the logs for details.');
+            return redirect()->back()->with('error', 'Error updating online lesson. Please check the logs for details.');
         }
     }
 
@@ -85,8 +90,8 @@ class OnlineController extends Controller
                 return redirect()->route('online.index')->with('error', 'Online lesson not found.');
             }
 
-            if (!empty($lesson->desc)) {
-                $docService->delete($lesson->desc);
+            if (!empty($online->desc)) {
+                $docService->delete($online->desc);
             }
 
             if ($online->image) {
@@ -95,7 +100,7 @@ class OnlineController extends Controller
 
             $online->delete();
 
-            return redirect()->route('online.index')->with('success', 'Online lesson deleted successfully!');
+            return redirect()->route('ofline.index')->with('success', 'Online lesson deleted successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error deleting online lesson: ' . $e->getMessage());
         }

@@ -15,7 +15,7 @@
                                     <h5 class="text-primary text-white mb-3 animated slideInDown">Best Online
                                         Courses</h5>
                                     <h1 class="display-3 text-white animated slideInDown">{{ $item->title }}</h1>
-                                    <a href="https://checkout.paycom.uz" class="btn btn-light py-md-3 px-md-5 animated slideInRight"> Start Today</a>
+                                    <a href="{{ route('register') }}" class="btn btn-light py-md-3 px-md-5 animated slideInRight"> Start Today</a>
 {{--                                    <form action="{{ route('register') }}" >--}}
 {{--                                        @csrf--}}
 {{--                                        <input type="hidden" name="amount" value="{{ $o_course->price }}">--}}
@@ -30,52 +30,6 @@
         </div>
     </div>
     <!-- Carousel End -->
-
-    <!-- Service Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-graduation-cap text-white mb-4"></i>
-                            <h5 class="mb-3 text-white">Skilled Instructors</h5>
-                            <p class="text-white">Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-globe text-white mb-4"></i>
-                            <h5 class="mb-3 text-white">Online Classes</h5>
-                            <p class="text-white">Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-home text-white mb-4"></i>
-                            <h5 class="mb-3 text-white">Home Projects</h5>
-                            <p class="text-white">Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="service-item text-center pt-3">
-                        <div class="p-4">
-                            <i class="fa fa-3x fa-book-open text-white mb-4"></i>
-                            <h5 class="mb-3 text-white">Book Library</h5>
-                            <p class="text-white">Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
 
     <!-- About Start -->
     <div class="container-xxl py-5">

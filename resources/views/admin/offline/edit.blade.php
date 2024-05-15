@@ -16,13 +16,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Fotosurat</label>
-                    <input type="file" class="form-control" name="image" value="{{ old('image', $offline->image) }}">
+                    <input type="file" class="form-control" name="image" value="{{ old('image', $offline->image) }}" accept="image/*">
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Answer:</label>
+                    <label for="desc" class="form-label">Tavsif</label>
                     <textarea name="desc" id="tinymce" class="form-control" rows="5">{{ old('desc', $offline->desc) }}</textarea>
                 </div>
 

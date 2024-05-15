@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTypeOfLessonRequest;
-use App\Http\Requests\UpdateTypeOfLessonRequest;
+use App\Http\Requests\StoreOnlineRequest;
+use App\Http\Requests\UpdateOnlineRequest;
 use App\Models\Offline;
 use App\Services\DOMDocumentService;
 use App\Services\UploadFileService;
-use DOMDocument;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,13 +20,15 @@ class OfflineController extends Controller
         return view('admin.offline.index', compact('offlines'));
     }
 
-    public function store(StoreTypeOfLessonRequest $request, DOMDocumentService $docService)
+    public function store(StoreOnlineRequest $request, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
 
             $desc = $request->desc;
             $processedDesc = $docService->processHTML($desc);
+
+            $validatedData['desc'] = $processedDesc;
 
             $ImagePath = UploadFileService::uploadFile($request->file('image'), 'images');
 
@@ -48,7 +49,7 @@ class OfflineController extends Controller
         return view('admin.offline.edit', compact('offline'));
     }
 
-    public function update(UpdateTypeOfLessonRequest $request, Offline $offline, DOMDocumentService $docService)
+    public function update(UpdateOnlineRequest $request, Offline $offline, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
@@ -82,8 +83,8 @@ class OfflineController extends Controller
                 return redirect()->route('online.index')->with('error', 'Offline lesson not found.');
             }
 
-            if (!empty($lesson->desc)) {
-                $docService->delete($lesson->desc);
+            if (!empty($offline->desc)) {
+                $docService->delete($offline->desc);
             }
 
             if ($offline->image) {

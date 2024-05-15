@@ -84,6 +84,14 @@ class LessonController extends Controller
         try {
             $validatedData = $request->validated();
 
+            $homework = $validatedData['homework'];
+            $homeworkDOM = $docService->processHTML($homework);
+            $validatedData['homework'] = $homeworkDOM;
+
+            $answer = $validatedData['answer'];
+            $answerDOM = $docService->processHTML($answer);
+            $validatedData['answer'] = $answerDOM;
+
             if ($request->hasFile('video')) {
                 if ($lesson->video && Storage::disk('public')->exists($lesson->video)) {
                     UploadFileService::deleteFile($lesson->video);
