@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOnlineRequest;
-use App\Http\Requests\UpdateOnlineRequest;
+use App\Http\Requests\StoreTypeOfLessonsRequest;
+use App\Http\Requests\UpdateTypeOfLessonsRequest;
 use App\Models\Online;
 use App\Services\DOMDocumentService;
 use App\Services\UploadFileService;
@@ -21,7 +21,7 @@ class OnlineController extends Controller
         return view('admin.online.index', compact('onlines'));
     }
 
-    public function store(StoreOnlineRequest $request, DOMDocumentService $docService)
+    public function store(StoreTypeOfLessonsRequest $request, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
@@ -33,7 +33,7 @@ class OnlineController extends Controller
 
             $ImagePath = UploadFileService::uploadFile($request->file('image'), 'images');
 
-            $price = (int) str_replace('.',',', '', $request->price);
+            $price = (int) str_replace('.','', $request->price);
 
             Online::create([
                 'title' => $validatedData['title'],
@@ -53,7 +53,7 @@ class OnlineController extends Controller
         return view('admin.online.edit', compact('online'));
     }
 
-    public function update(UpdateOnlineRequest $request, Online $online, DOMDocumentService $docService)
+    public function update(UpdateTypeOfLessonsRequest $request, Online $online, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();

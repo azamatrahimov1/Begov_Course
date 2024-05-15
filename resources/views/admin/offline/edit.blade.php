@@ -22,6 +22,10 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <label for="price" class="form-label">Narx</label>
+                    <input type="number" class="form-control" name="price" value="{{ old('price', $offline->price) }}">
+                </div>
+                <div class="mb-3">
                     <label for="desc" class="form-label">Tavsif</label>
                     <textarea name="desc" id="tinymce" class="form-control" rows="5">{{ old('desc', $offline->desc) }}</textarea>
                 </div>

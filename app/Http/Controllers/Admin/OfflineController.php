@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOnlineRequest;
-use App\Http\Requests\UpdateOnlineRequest;
+use App\Http\Requests\StoreTypeOfLessonsRequest;
+use App\Http\Requests\UpdateTypeOfLessonsRequest;
 use App\Models\Offline;
 use App\Services\DOMDocumentService;
 use App\Services\UploadFileService;
@@ -20,7 +20,7 @@ class OfflineController extends Controller
         return view('admin.offline.index', compact('offlines'));
     }
 
-    public function store(StoreOnlineRequest $request, DOMDocumentService $docService)
+    public function store(StoreTypeOfLessonsRequest $request, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
@@ -32,8 +32,11 @@ class OfflineController extends Controller
 
             $ImagePath = UploadFileService::uploadFile($request->file('image'), 'images');
 
+            $price = (int) str_replace('.','', $request->price);
+
             Offline::create([
                 'title' => $validatedData['title'],
+                'price' => $price,
                 'image' => $ImagePath,
                 'desc' => $processedDesc,
             ]);
@@ -49,7 +52,7 @@ class OfflineController extends Controller
         return view('admin.offline.edit', compact('offline'));
     }
 
-    public function update(UpdateOnlineRequest $request, Offline $offline, DOMDocumentService $docService)
+    public function update(UpdateTypeOfLessonsRequest $request, Offline $offline, DOMDocumentService $docService)
     {
         try {
             $validatedData = $request->validated();
@@ -65,6 +68,9 @@ class OfflineController extends Controller
                 }
                 $validatedData['image'] = UploadFileService::uploadFile($request->file('image'), 'images');
             }
+
+            $price = (int) str_replace('.', '', $request->price);
+            $validatedData['price'] = $price;
 
             $offline->update($validatedData);
 

@@ -9,5 +9,5 @@ class Offline extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'desc'];
+    protected $fillable = ['title', 'image', 'desc', 'price'];
 }

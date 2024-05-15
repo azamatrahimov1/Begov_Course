@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Online;
+use App\Models\Order;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
@@ -52,6 +54,17 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        return view('auth.checkout');
+    }
+
+    public function checkout(Request $request, $id)
+    {
+        $course = Online::findOrFail($id);
+        $order = new Order();
+        $order->course_id = $id;
+        $order->price = $request->amount;
+        $order->save();
 
         return redirect(RouteServiceProvider::HOME);
     }
