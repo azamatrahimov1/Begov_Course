@@ -40,6 +40,7 @@ class AboutController extends Controller
             $videoPath = UploadFileService::uploadFile($request->file('video'), 'videos');
 
             About::create([
+                'title' => $validatedData['title'],
                 'desc' => $processedDesc,
                 'address' => $validatedData['address'],
                 'video' => $videoPath,

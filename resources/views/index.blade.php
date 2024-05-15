@@ -35,21 +35,20 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
+                @foreach($abouts as $about)
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
                     <div class="position-relative h-100">
                         <video class="img-fluid position-absolute w-100 h-100" style="object-fit: cover;" controls>
-                            <source src="{{ asset('assets/video/IMG_9209.MOV') }}" type="video/mp4">
+                            <source src="{{ asset('storage/'. $about->video) }}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="section-title bg-white text-start text-primary pe-3">Biz Haqimizda</h6>
-                    <h1 class="mb-4">
-                        Ingliz tili kursiga xush kelibsiz</h1>
-                    @foreach($abouts as $about)
-                        <p class="mb-4">{!! $about->desc !!}</p>
-                    @endforeach
+                    <h1 class="mb-4">{{ $about->title }}</h1>
+                    <p class="mb-4">{!! $about->desc !!}</p>
+
                     <div class="row gy-2 gx-4 mb-4">
                         <div class="col-sm-6">
                             <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Onlayn darslar
@@ -84,6 +83,7 @@
                     </div>
                     <a href="{{ route('register') }}" class="btn btn-primary py-3 px-5 mt-2"> Start Today</a>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>

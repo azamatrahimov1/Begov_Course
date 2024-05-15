@@ -22,9 +22,10 @@ class StoreAboutRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => 'required',
             'desc' => 'required',
             'address' => 'required',
-            'video' => 'required',
+            'video' => 'required|file|mimes:mp4,avi,mov',
             'telegram_account' => 'required|unique:abouts',
             'phone_number' => 'required|unique:abouts',
         ];

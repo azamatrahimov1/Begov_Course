@@ -22,6 +22,7 @@ class UpdateAboutRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => 'string',
             'desc' => 'string',
             'address' => 'unique:abouts',
             'video' => 'file|mimes:mp4,avi,mov',

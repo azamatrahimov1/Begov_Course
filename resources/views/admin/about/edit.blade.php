@@ -10,6 +10,14 @@
                 @method('PUT')
 
                 <div class="mb-3">
+                    <label for="title" class="form-label">Address</label>
+                    <input type="text" class="form-control" name="title" value="{{ old('title', $about->title) }}">
+                    @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label for="desc" class="form-label">Tavsif</label>
                     <textarea name="desc" id="tinymce" class="form-control" rows="5">{{ old('desc', $about->desc) }}</textarea>
                     @error('desc')

@@ -41,12 +41,18 @@
 
                             <div class="row mb-3">
                                 <div class="col mb-0">
+                                    <label for="title" class="form-label">Sarlavha</label>
+                                    <input type="text" id="nameBackdrop" name="title" class="form-control"
+                                           value="{{ old('title') }}" required/>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col mb-0">
                                     <label for="desc" class="form-label">Tavsifi</label>
                                     <textarea name="desc" id="tinymce" class="form-control"
                                               rows="5">{{ old('desc') }}</textarea>
                                 </div>
                             </div>
-
                             <div class="row mb-3">
                                 <div class="col mb-0">
                                     <label for="address" class="form-label">Manzil</label>
@@ -103,6 +109,7 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Sarlavha</th>
                     <th scope="col">Tavsifi</th>
                     <th scope="col">Address</th>
                     <th scope="col">Video</th>
@@ -117,6 +124,7 @@
                 @foreach($abouts as $about)
                     <tr>
                         <td>{{$i++}}</td>
+                        <td>{{$about->title}}</td>
                         <td>{!! $about->desc !!}</td>
                         <td>{{$about->address}}</td>
                         <td>
