@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Gallery;
 use App\Models\Logo;
 use App\Models\MainScreen;
 use App\Models\Offline;
@@ -18,7 +19,8 @@ class HomeController extends Controller
         $onlines = Online::all();
         $oflines = Offline::all();
         $logos = Logo::all();
+        $galleries = Gallery::all();
 
-        return view('index', compact( 'mainScreens', 'abouts', 'onlines', 'oflines', 'logos'));
+        return view('index', compact( 'mainScreens', 'abouts', 'onlines', 'oflines', 'logos', 'galleries'));
     }
 }

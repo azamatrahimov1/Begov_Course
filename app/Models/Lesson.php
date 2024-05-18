@@ -12,9 +12,7 @@ class Lesson extends Model
 
     protected $fillable = ['name', 'name_video', 'video', 'name_image', 'voice', 'pdf', 'homework', 'answer'];
 
-    //lesson_like
     public function user() {return $this->belongsTo(User::class);}
-    public function likes() {return $this->belongsToMany(User::class, 'lesson_like')->withTimestamps();}
     public function photos() {return $this->hasMany(Photo::class);}
 
     public function toSearchableArray(): array

@@ -71,32 +71,33 @@
 
 
     <!-- Gallery Start -->
+    @if($galleries->isNotEmpty())
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
             <div class="text-center">
-                <h6 class="section-title bg-white text-center text-primary px-3">Gallery</h6>
-                <h1 class="mb-5">...</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Galereya</h6>
             </div>
             <div class="owl-carousel testimonial-carousel position-relative">
-                <div class="testimonial-item text-center">
-                    <img class="p-2 mx-auto mb-3" src="{{ asset('assets/img/cat-4.jpg') }}" alt="" style="object-fit: cover;">
-                    <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin:  1px;">
-                        <h5 class="m-0">New Year holiday</h5>
-                        <small class="text-primary">2023</small>
+                @foreach($galleries as $gallery)
+                    <div class="testimonial-item text-center">
+                        <img class="p-2 mx-auto mb-3" src="{{ asset('storage/' . $gallery->image) }}" alt="" style="object-fit: cover; height: 400px">
+                        <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin:  1px;">
+                            <h5 class="m-0">{{ $gallery->title }}</h5>
+                        </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
+    @endif
     <!-- Gallery End -->
 
 
-    <!-- Courses Start -->
+    <!-- Type of Lessons Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Courses</h6>
-                <h1 class="mb-5">Popular Courses</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Kurslar</h6>
             </div>
             <div class="row g-4 justify-content-center">
                 @foreach($onlines as $online)
@@ -162,15 +163,14 @@
             </div>
         </div>
     </div>
-    <!-- Courses End -->
+    <!-- Type of Lessons End -->
 
 
     <!-- Team Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
-                <h1 class="mb-5">Expert Instructors</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Bizning jamoamiz</h6>
             </div>
             <div class="owl-carousel testimonial-carousel position-relative">
                 <div class="testimonial-item text-center" data-wow-delay="0.1s">
@@ -181,7 +181,7 @@
                         <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
                             <div class="bg-light d-flex justify-content-center pt-2 px-1">
                                 <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-telegram"></i></a>
                                 <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
@@ -218,4 +218,21 @@
     </div>
     <!-- Testimonial End -->
 
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            $(".owl-carousel").owlCarousel({
+                // Ваши настройки карусели
+                items: 1,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                dots: true,
+                nav: true,
+                // Другие настройки
+            });
+        });
+    </script>
 @endsection

@@ -198,20 +198,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if(Auth::user()->likesLesson($lesson))
-                                    <form action="{{ route('lessons.unlike', $lesson->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger"><i
-                                                class="bx bx-like me-2"></i>{{ $lesson->likes()->count() }}
-                                        </button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('lessons.like', $lesson->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger"><i
-                                                class="bx bx-like me-2"></i>{{ $lesson->likes()->count() }}</button>
-                                    </form>
-                                @endif
                             </div>
                         </td>
                     </tr>

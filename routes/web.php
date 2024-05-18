@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\Admin\ChapterController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LessonController;
-use App\Http\Controllers\Admin\LessonLikeController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\MainScreenController;
 use App\Http\Controllers\Admin\OfflineController;
-use App\Http\Controllers\Admin\PreIELTSController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OnlineController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Payme\PaymeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +26,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', '\App\Http\Controllers\HomeController@index')->name('index');
+Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home');
 
+Route::get('/payme', [PaymeController::class, 'index']);
 
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('can:show-grammar-lessons');
+    Route::get('/dashboard/{chart}/edit', [DashboardController::class, 'edit'])->name('dashboard.edit')->middleware('can:edit');
+    Route::put('/dashboard/{chart}', [DashboardController::class, 'update'])->name('dashboard.update')->middleware('can:edit');
     //Main Screen
     Route::resource('/main-screen', MainScreenController::class)->middleware('role:super-user');
     //logo
@@ -48,12 +52,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('/role', RoleController::class)->middleware('role:super-user');
     //Users
     Route::resource('/users', UserController::class)->middleware('role:super-user');
+    //Gallery
+    Route::resource('/gallery', GalleryController::class)->middleware('role:super-user');
 
     //Lessons
-    Route::get('/dashboard', [LessonController::class, 'index'])->name('lessons.index')->middleware('can:show-grammar-lessons');
+    Route::get('/lessons/create', [LessonController::class, 'index'])->name('lessons.index')->middleware('can:show-grammar-lessons');
     Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show')->middleware('can:show-grammar-lessons');
     Route::post('/lessons', [LessonController::class, 'store'])->name('lessons.store')->middleware('can:create');
-    Route::get('/lessons{lesson}/edit', [LessonController::class, 'edit'])->name('lessons.edit')->middleware('can:edit');
+    Route::get('/lessons/{lesson}/edit', [LessonController::class, 'edit'])->name('lessons.edit')->middleware('can:edit');
     Route::put('/lessons/{lesson}', [LessonController::class, 'update'])->name('lessons.update')->middleware('can:edit');
     Route::delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->name('lessons.destroy')->middleware('can:delete');
     Route::post('like/{lesson}/like', [LessonController::class, 'like'])->name('lessons.like');
