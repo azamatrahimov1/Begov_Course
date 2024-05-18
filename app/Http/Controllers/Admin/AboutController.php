@@ -4,15 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAboutRequest;
 use App\Http\Requests\UpdateAboutRequest;
 use App\Models\About;
 use App\Services\DOMDocumentService;
 use App\Services\UploadFileService;
-use DOMDocument;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -27,36 +22,6 @@ class AboutController extends Controller
     public function show(About $about)
     {
         return view('admin.about.show', compact('about'));
-    }
-
-    public function store(StoreAboutRequest $request, DOMDocumentService $docService)
-    {
-        try {
-            $validatedData = $request->validated();
-
-            $description = $request->desc;
-            $processedDesc = $docService->processHTML($description);
-
-            $videoPath = UploadFileService::uploadFile($request->file('video'), 'videos');
-
-            About::create([
-                'title' => $validatedData['title'],
-                'desc' => $processedDesc,
-                'address' => $validatedData['address'],
-                'video' => $videoPath,
-                'telegram_account' => $validatedData['telegram_account'],
-                'phone_number' => $validatedData['phone_number'],
-            ]);
-
-            return redirect()->route('abouts.index')->with('success', 'About created successfully!');
-        } catch (\Exception $e) {
-            Log::error('Error creating about: ' . $e->getMessage(), [
-                'exception' => $e,
-                'request_data' => $request->all(),
-            ]);
-
-            return redirect()->back()->with('error', 'Error creating about: ' . $e->getMessage());
-        }
     }
 
     public function edit(About $about)

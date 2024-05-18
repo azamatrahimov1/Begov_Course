@@ -25,7 +25,10 @@ class StoreTypeOfLessonsRequest extends FormRequest
             'image' => 'required|file|mimes:jpg,png,webp,jpeg',
             'title' => 'required',
             'desc' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'teacher' => 'required',
+            'student' => 'required',
+            'hour' => 'required'
         ];
     }
 }

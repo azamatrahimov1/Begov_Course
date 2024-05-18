@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Ingiliz tili kurslari / biz bilan juda oson / Begov</title>
+    <title>eLEARNING - eLearning HTML Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -14,8 +14,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -45,10 +46,9 @@
 
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="#" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         @foreach($logos as $logo)
-            <img src="{{ asset('storage/'. $logo->image) }}" style="border-radius: 50%; width: 50px; height: 50px;">
-            <h2 class="m-1 text-primary">{{ $logo->title }}</h2>
+            <h2 class="m-0 text-primary"><img class="rounded-circle me-1" src="{{ asset('storage/'. $logo->image) }}" style="height: 60px;width: 60px">{{ $logo->title }}</h2>
         @endforeach
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -56,7 +56,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="index.html" class="nav-item nav-link active">Home</a>
+            <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
             <a href="about.html" class="nav-item nav-link">About</a>
             <a href="courses.html" class="nav-item nav-link">Courses</a>
             <div class="nav-item dropdown">
@@ -67,21 +67,23 @@
                     <a href="404.html" class="dropdown-item">404 Page</a>
                 </div>
             </div>
-            <a href="{{ route('contact') }}" class="nav-item nav-link">Aloqa</a>
+            <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
         </div>
         @if (Route::has('login'))
-            @auth
-                <a href="{{ url('/dashboard') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Dashboard<i
+            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Dashboard<i
                             class="fa fa-arrow-right ms-3"></i></a>
-            @else
-                <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Log In<i
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Log in<i
                             class="fa fa-arrow-right ms-3"></i></a>
-            @endauth
+                @endauth
+            </div>
         @endif
     </div>
 </nav>
-
 <!-- Navbar End -->
+
 
 @yield('content')
 
@@ -92,7 +94,7 @@
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-white mb-3">Quick Link</h4>
                 <a class="btn btn-link" href="">About Us</a>
-                <a class="btn btn-link" href="{{ route('contact') }}">Biz bilan bog'lanish</a>
+                <a class="btn btn-link" href="">Contact Us</a>
                 <a class="btn btn-link" href="">Privacy Policy</a>
                 <a class="btn btn-link" href="">Terms & Condition</a>
                 <a class="btn btn-link" href="">FAQs & Help</a>
@@ -102,12 +104,14 @@
                     <h4 class="text-white mb-3">Contact</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ $about->address }}</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ $about->phone_number }}</p>
-
                     <div class="d-flex pt-2">
-                        <a class="btn btn-social" href="{{ $about->telegram_account }}"><i
-                                    class="fab fa-telegram"></i></a>
-                        <a class="btn btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="{{ $about->instagram }}"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="{{ $about->facebook }}"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="{{ $about->telegram }}"><i
+                                class="fab fa-telegram"></i></a>
                     </div>
                 @endforeach
             </div>
@@ -161,8 +165,14 @@
 <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
 <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
+<!-- Sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- Template Javascript -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
+@yield('script')
+
 </body>
 
 </html>

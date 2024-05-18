@@ -22,11 +22,15 @@ class UpdateAboutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string',
-            'desc' => 'string',
-            'address' => 'unique:abouts',
-            'video' => 'file|mimes:mp4,avi,mov',
-            'telegram_account' => 'unique:abouts',
+            'title' => 'required|string',
+            'desc' => 'required|string',
+            'address' => 'required|string',
+            'map' => 'required|string',
+            'phone_number' => 'required',
+            'telegram_account' => 'nullable|string',
+            'instagram' => 'nullable|string',
+            'facebook' => 'nullable|string',
+            'video'  => 'required'
         ];
     }
 }

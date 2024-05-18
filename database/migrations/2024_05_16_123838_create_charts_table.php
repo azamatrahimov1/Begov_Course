@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offlines', function (Blueprint $table) {
+        Schema::create('charts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('image');
-            $table->string('price');
-            $table->string('teacher');
-            $table->string('hour');
-            $table->string('student');
-            $table->longText('desc');
+            $table->text('desc');
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('offlines');
+        Schema::dropIfExists('charts');
     }
 };

@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             'name' => 'Dostonbek',
             'email' => 'admin@gmail.com',
             'phone_number' => '+99 894 081 00 48',
-            'end_date' => '2035-12-31 23:59:59',
+            'end_date' => '2037-12-31 23:59:59',
             'password' => Hash::make('1234567890'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

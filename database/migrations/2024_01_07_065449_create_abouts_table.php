@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('title');
             $table->longText('desc')->nullable();
             $table->string('address');
+            $table->text('map');
             $table->text('video');
-            $table->string('telegram_account', 255)->unique();
+            $table->string('telegram_account', 255)->nullable();
+            $table->string('instagram', 255)->nullable();
+            $table->string('facebook', 255)->nullable();
             $table->string('phone_number', 20);
             $table->timestamps();
         });

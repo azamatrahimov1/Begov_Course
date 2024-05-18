@@ -36,6 +36,9 @@ class OfflineController extends Controller
 
             Offline::create([
                 'title' => $validatedData['title'],
+                'student' => $validatedData['student'],
+                'teacher' => $validatedData['teacher'],
+                'hour' => $validatedData['hour'],
                 'price' => $price,
                 'image' => $ImagePath,
                 'desc' => $processedDesc,

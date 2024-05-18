@@ -37,6 +37,9 @@ class OnlineController extends Controller
 
             Online::create([
                 'title' => $validatedData['title'],
+                'student' => $validatedData['student'],
+                'teacher' => $validatedData['teacher'],
+                'hour' => $validatedData['hour'],
                 'price' => $price,
                 'image' => $ImagePath,
                 'desc' => $processedDesc,

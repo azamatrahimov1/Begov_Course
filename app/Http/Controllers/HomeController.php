@@ -15,10 +15,10 @@ class HomeController extends Controller
     {
         $mainScreens = MainScreen::all();
         $abouts = About::all();
-        $onlines = Order::all();
-        $offlines = Offline::all();
+        $onlines = Online::all();
+        $oflines = Offline::all();
         $logos = Logo::all();
 
-        return view('index', compact( 'mainScreens', 'abouts', 'onlines', 'offlines', 'logos'));
+        return view('index', compact( 'mainScreens', 'abouts', 'onlines', 'oflines', 'logos'));
     }
 }

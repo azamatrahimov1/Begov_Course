@@ -10,24 +10,33 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="title" class="form-label">Address</label>
+                    <label for="title" class="form-label">Sarlavha</label>
                     <input type="text" class="form-control" name="title" value="{{ old('title', $about->title) }}">
                     @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="map" class="form-label">Xarita manzili</label>
+                    <input type="text" class="form-control" name="map" value="{{ old('map', $about->map) }}">
+                    @error('map')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="desc" class="form-label">Tavsif</label>
-                    <textarea name="desc" id="tinymce" class="form-control" rows="5">{{ old('desc', $about->desc) }}</textarea>
+                    <textarea name="desc" id="tinymce" class="form-control"
+                              rows="5">{{ old('desc', $about->desc) }}</textarea>
                     @error('desc')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" value="{{ old('address', $about->address) }}">
+                    <label for="address" class="form-label">Manzil</label>
+                    <input type="text" class="form-control" name="address"
+                           value="{{ old('address', $about->address) }}">
                     @error('address')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -44,10 +53,28 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="telegram_account" class="form-label">Telegram Account</label>
+                    <label for="telegram_account" class="form-label">Telegram</label>
                     <input type="text" class="form-control" name="telegram_account"
                            value="{{ old('telegram_account', $about->telegram_account) }}">
                     @error('telegram_account')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="instagram" class="form-label">Instagram</label>
+                    <input type="text" class="form-control" name="instagram"
+                           value="{{ old('instagram', $about->instagram) }}">
+                    @error('instagram')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="facebook" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" name="facebook"
+                           value="{{ old('instagram', $about->facebook) }}">
+                    @error('facebook')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -63,7 +90,7 @@
 
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">
-                        Update
+                        Topshirish
                     </button>
                 </div>
             </form>

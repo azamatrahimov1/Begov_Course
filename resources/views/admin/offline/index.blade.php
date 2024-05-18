@@ -51,6 +51,25 @@
                                 <input type="number" name="price" class="form-control" value="{{ old('price') }}"/>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="teacher" class="form-label">O'qituvchi</label>
+                                <input type="text" name="teacher" class="form-control" value="{{ old('teacher') }}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="student" class="form-label">O'quvchi soni</label>
+                                <input type="text" name="student" class="form-control" value="{{ old('student') }}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="hour" class="form-label">Dars Vaqti</label>
+                                <input type="text" name="hour" class="form-control" value="{{ old('hour') }}"/>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="desc" class="form-label">Tavsifi</label>
@@ -89,6 +108,9 @@
                     <th scope="col">Sarlavha</th>
                     <th scope="col">Fotosurat</th>
                     <th scope="col">Narx</th>
+                    <th scope="col">O'qituvchi</th>
+                    <th scope="col">O'quvchi Soni</th>
+                    <th scope="col">Dars vaqti</th>
                     <th scope="col">Tavsifi</th>
                 </tr>
                 </thead>
@@ -104,6 +126,9 @@
                             <img src="{{ asset('storage/'. $offline->image) }}" style="height: 100px; width: 100px"/>
                         </td>
                         <td>{{ $offline->price }}</td>
+                        <td>{{ $offline->teacher }}</td>
+                        <td>{{ $offline->student }}</td>
+                        <td>{{ $offline->hour }}</td>
                         <td>{!! $offline->desc !!}</td>
                         <td>
                             <div class="d-flex">

@@ -27,37 +27,40 @@
                         <td>{{$contact->phone_number}}</td>
                         <td>{{$contact->desc}}</td>
                         <td>
-                            <button type="button" class="btn btn-icon btn-danger me-2"
-                                    data-bs-toggle="modal" data-bs-target="#modalToggle{{$contact->id}}">
-                                <i class="bx bx-trash-alt"></i></button>
+                            @if(auth()->user()->can('delete'))
+                                <button type="button" class="btn btn-icon btn-danger me-2"
+                                        data-bs-toggle="modal" data-bs-target="#modalToggle{{$contact->id}}">
+                                    <i class="bx bx-trash-alt"></i></button>
 
-                            <div class="modal fade" id="modalToggle{{$contact->id}}"
-                                 aria-labelledby="modalToggleLabel{{$contact->id}}" tabindex="-1"
-                                 style="display: none" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalToggleLabel{{$contact->id}}">
-                                                Buni qaytara olmaysiz!</h5>
-                                            <button type="button" class="btn-close"
-                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">{{ $contact->full_name }}</div>
-                                        <div class="modal-footer">
-                                            <form action="{{ route('contacts.destroy', ['contact' => $contact->id]) }}"
-                                                  method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">O'chirish
+                                <div class="modal fade" id="modalToggle{{$contact->id}}"
+                                     aria-labelledby="modalToggleLabel{{$contact->id}}" tabindex="-1"
+                                     style="display: none" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalToggleLabel{{$contact->id}}">
+                                                    Buni qaytara olmaysiz!</h5>
+                                                <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">{{ $contact->full_name }}</div>
+                                            <div class="modal-footer">
+                                                <form
+                                                    action="{{ route('contacts.destroy', ['contact' => $contact->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">O'chirish
+                                                    </button>
+                                                </form>
+                                                <button class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">Ortga
                                                 </button>
-                                            </form>
-                                            <button class="btn btn-outline-secondary"
-                                                    data-bs-dismiss="modal">Ortga
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -69,27 +72,6 @@
 @endsection
 
 @section('script')
-    <script>
-        form = document.getElementById('form-delete');
-
-        function delete_button(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.action = '/contacts/' + id;
-                    form.submit()
-                }
-            })
-        }
-
-    </script>
 
 @endsection
 

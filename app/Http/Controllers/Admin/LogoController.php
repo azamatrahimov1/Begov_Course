@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMainScreenRequest;
-use App\Http\Requests\UpdateMainScreenRequest;
+use App\Http\Requests\UpdateLogoRequest;
 use App\Models\Logo;
 use App\Services\UploadFileService;
 use Illuminate\Support\Facades\Log;
@@ -19,32 +18,12 @@ class LogoController extends Controller
         return view('admin.logo.index', compact('logos'));
     }
 
-    public function store(StoreMainScreenRequest $request)
-    {
-        try {
-            $data = new Logo();
-
-            if ($request->hasFile('image')) {
-                $filename = UploadFileService::uploadFile($request->file('image'), 'images');
-
-                $data->fill([
-                    'title' => $request->title,
-                    'image' => $filename,
-                ])->save();
-            }
-
-            return redirect()->route('logo.index')->with('success', 'Logo created successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error creating Logo: ' . $e->getMessage());
-        }
-    }
-
     public function edit(Logo $logo)
     {
         return view('admin.logo.edit', compact('logo'));
     }
 
-    public function update(UpdateMainScreenRequest $request, Logo $logo)
+    public function update(UpdateLogoRequest $request, Logo $logo)
     {
         try {
             $validatedData = $request->validated();

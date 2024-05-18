@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTypeOfLessonsRequest extends FormRequest
+class UpdateChartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,7 @@ class UpdateTypeOfLessonsRequest extends FormRequest
     {
         return [
             'title' => 'string',
-            'image' => 'file|mimes:jpg,png,webp,jpeg',
             'desc' => 'string',
-            'price' => 'numeric',
-            'teacher' => 'required',
-            'student' => 'required',
-            'hour' => 'required'
         ];
     }
 }
