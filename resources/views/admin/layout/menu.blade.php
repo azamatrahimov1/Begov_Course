@@ -84,6 +84,13 @@
             </a>
         </li>
 
+        <li class="menu-item @if(Route::is('student.index')) active @endif">
+            <a href="{{ route('student.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user-rectangle"></i>
+                <div data-i18n="Analytics">O'quvchilarimiz</div>
+            </a>
+        </li>
+
         <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-copy"></i>

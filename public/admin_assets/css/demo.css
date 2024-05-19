@@ -2,6 +2,21 @@
 * demo.css
 * File include item demo only specific css only
 ******************************************************************************/
+.marquee {
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee span {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 11s linear infinite;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
 
 .menu .app-brand.demo {
   height: 64px;

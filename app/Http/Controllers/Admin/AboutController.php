@@ -19,11 +19,6 @@ class AboutController extends Controller
         return view('admin.about.index', compact('abouts'));
     }
 
-    public function show(About $about)
-    {
-        return view('admin.about.show', compact('about'));
-    }
-
     public function edit(About $about)
     {
         return view('admin.about.edit', compact('about'));
