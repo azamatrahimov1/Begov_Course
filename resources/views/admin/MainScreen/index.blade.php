@@ -126,23 +126,6 @@
                         </td>
                     </tr>
                 </tbody>
-                <!-- Модальное окно -->
-                <div class="modal fade" id="imageModal{{$mainScreen->id}}" tabindex="-1" role="dialog"
-                     aria-labelledby="imageModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Закрыть"></button>
-                            </div>
-                            <div class="modal-body">
-                                <img src="{{ asset('storage/'.$mainScreen->image) }}" class="img-fluid"
-                                     alt="Modal Image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 @endforeach
             </table>
 
@@ -152,26 +135,5 @@
 @endsection
 
 @section('script')
-    <script>
-        form = document.getElementById('form-delete');
-
-        function delete_button(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.action = '/main-screen/' + id;
-                    form.submit()
-                }
-            })
-        }
-
-    </script>
 
 @endsection

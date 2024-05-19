@@ -5,22 +5,6 @@
 
     @include('admin.success-alert')
 
-    @error('desc')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    @error('address')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    @error('video')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    @error('telegram_account')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-    @error('phone_number')
-    <div class="alert alert-danger">{{ $message }}</div>
-    @enderror
-
     <div class="card">
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -35,7 +19,7 @@
                     <th scope="col">Telegram</th>
                     <th scope="col">Instagram</th>
                     <th scope="col">Facebook</th>
-                    <th scope="col">Phone Number</th>
+                    <th scope="col">Telefon Raqami</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">

@@ -33,15 +33,15 @@
                     <div data-i18n="Analytics">Asosiy sahifa</div>
                 </a>
             </li>
-            <li class="menu-item @if(Route::is('lessons.index')) active @endif">
-                <a href="{{ route('lessons.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bxs-plus-circle"></i>
-                    <div data-i18n="Analytics">Dars</div>
-                </a>
-            </li>
         @endif
 
         @role('super-user')
+        <li class="menu-item @if(Route::is('lessons.index')) active @endif">
+            <a href="{{ route('lessons.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-plus-circle"></i>
+                <div data-i18n="Analytics">Dars</div>
+            </a>
+        </li>
         <li class="menu-item @if(Route::is('role.index')) active @endif">
             <a href="{{ route('role.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
@@ -74,6 +74,13 @@
             <a href="{{ route('gallery.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-grid-alt"></i>
                 <div data-i18n="Analytics">Galereya</div>
+            </a>
+        </li>
+
+        <li class="menu-item @if(Route::is('team.index')) active @endif">
+            <a href="{{ route('team.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user-badge"></i>
+                <div data-i18n="Analytics">Jamoa a'zolari</div>
             </a>
         </li>
 

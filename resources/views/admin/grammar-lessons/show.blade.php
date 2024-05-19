@@ -7,7 +7,7 @@
         <div class="row mb-5">
             <div class="col-md-6 col-lg-8 mb-2 mx-auto my-auto">
                 <div class="card">
-                    <video class="card-img-top" controls>
+                    <video class="card-img-top" controls style="height: 650px">
                         <source src="{{ asset('storage/' . $lesson->video) }}" type="video/mp4">
                     </video>
                     <div class="card-body">
@@ -21,17 +21,41 @@
             <div class="col-md-6 col-lg-8 mx-auto my-auto">
                 <div class="card position-relative">
 
-                    <button class="btn btn-navigation btn-prev" onclick="showPreviousImage()">&#8249;</button>
-                    <button class="btn btn-navigation btn-next" onclick="showNextImage()">&#8250;</button>
-                    @php
-                        $firstPhoto = $lesson->photos->first();
-                    @endphp
+                    <div class="col-md">
+                        <div id="carouselExample-cf" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
+                            @if ($lesson->photos->isNotEmpty())
+                                <ol class="carousel-indicators">
+                                    @foreach ($lesson->photos as $index => $photo)
+                                        <li data-bs-target="#carouselExample-cf" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
+                                    @endforeach
+                                </ol>
+                                <div class="carousel-inner">
+                                    @foreach ($lesson->photos as $index => $photo)
+                                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                            <img class="d-block w-100" src="{{ asset('storage/' . $photo->path) }}" alt="Slide {{ $index + 1 }}" style="height: 650px">
+                                            <div class="carousel-caption d-none d-md-block">
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExample-cf" role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExample-cf" role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </a>
+                            @else
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <p>No images for this lesson</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
 
-                    @if ($firstPhoto)
-                        <img id="lesson-image" class="card-img-top" src="{{ asset('storage/' . $firstPhoto->path) }}" alt="Lesson Photo"/>
-                    @else
-                        <p>No images for this lesson</p>
-                    @endif
 
 
                     <div class="card-body">

@@ -12,15 +12,21 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::query()->where('name', '!=', 'Dostonbek')
+        $users = User::query()
+            ->where('name', '!=', 'Dostonbek')
             ->orderBy('end_date')
             ->when(request('search'), function ($query) {
-                $query->where('name', 'LIKE', '%' . request('search') . '%');
-                $query->Orwhere('email', 'LIKE', '%' . request('search') . '%');
-                $query->Orwhere('created_at', 'LIKE', '%' . request('search') . '%');
-                $query->Orwhere('phone_number', 'LIKE', '%' . request('search') . '%');
-                $query->Orwhere('end_date', 'LIKE', '%' . request('search') . '%');
-                $query->Orwhere('status', 'LIKE', '%' . request('search') . '%');
+                $query->where(function ($query) {
+                    $query->where('name', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('email', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('created_at', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('phone_number', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('end_date', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('status', 'LIKE', '%' . request('search') . '%');
+                });
+            })
+            ->when(request('filter') == 'expired', function ($query) {
+                $query->where('end_date', '<', now());
             })
             ->paginate(10);
 
@@ -28,6 +34,7 @@ class UserController extends Controller
 
         return view('admin.users.index', compact('users', 'roles'));
     }
+
 
     public function store(Request $request)
     {

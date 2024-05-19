@@ -56,7 +56,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
+            <a href="{{ route('home') }}" class="nav-item nav-link @if(Route::is('home')) active @endif">Home</a>
             <a href="about.html" class="nav-item nav-link">About</a>
             <a href="courses.html" class="nav-item nav-link">Courses</a>
             <div class="nav-item dropdown">
@@ -67,7 +67,7 @@
                     <a href="404.html" class="dropdown-item">404 Page</a>
                 </div>
             </div>
-            <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
+            <a href="{{ route('contact') }}" class="nav-item nav-link @if(Route::is('contact')) active @endif">Contact</a>
         </div>
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">

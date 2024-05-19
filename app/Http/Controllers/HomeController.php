@@ -9,6 +9,7 @@ use App\Models\MainScreen;
 use App\Models\Offline;
 use App\Models\Online;
 use App\Models\Order;
+use App\Models\Team;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,8 @@ class HomeController extends Controller
         $oflines = Offline::all();
         $logos = Logo::all();
         $galleries = Gallery::all();
+        $teams = Team::all();
 
-        return view('index', compact( 'mainScreens', 'abouts', 'onlines', 'oflines', 'logos', 'galleries'));
+        return view('index', compact( 'mainScreens', 'abouts', 'onlines', 'oflines', 'logos', 'galleries', 'teams'));
     }
 }

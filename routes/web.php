@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\MainScreenController;
 use App\Http\Controllers\Admin\OfflineController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OnlineController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\AboutController;
@@ -54,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users', UserController::class)->middleware('role:super-user');
     //Gallery
     Route::resource('/gallery', GalleryController::class)->middleware('role:super-user');
+    //Team
+    Route::resource('/team', TeamController::class)->middleware('role:super-user');
 
     //Lessons
     Route::get('/lessons/create', [LessonController::class, 'index'])->name('lessons.index')->middleware('can:show-grammar-lessons');
