@@ -20,23 +20,6 @@
     data-assets-path="../assets/"
     data-template="vertical-menu-template-free"
 >
-<!-- Pusher Notification -->
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-<script>
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('05beb96fd0f4c0e32cec', {
-        cluster: 'ap2'
-    });
-
-    var channel = pusher.subscribe('my-channel-p');
-    channel.bind('my-event-p', function(data) {
-        alert(JSON.stringify(data));
-    });
-</script>
-
 <head>
     <meta charset="utf-8"/>
     <meta
@@ -44,12 +27,12 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>English with Begov</title>
+    <title>Ingiliz tili kurslari / biz bilan juda oson / Begov</title>
 
     <meta name="description" content=""/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href=""/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo.png') }}"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -171,6 +154,41 @@
             ['view', ['fullscreen', 'codeview', 'help']]
         ]
     });
+</script>
+
+<!-- Pusher Notification -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('05beb96fd0f4c0e32cec', {
+        cluster: 'ap2'
+    });
+
+    var channel = pusher.subscribe('my-channel-p');
+
+    channel.bind('my-event-p', function(data) {
+        var toastTitle = document.getElementById('toastTitle');
+        var toastBody = document.getElementById('toastBody');
+        var toastElement = document.getElementById('myToast');
+
+        if (data && data.message && data.message.full_name && data.message.desc) {
+            toastTitle.textContent = data.message.full_name;
+            toastBody.textContent = data.message.desc;
+
+            var toast = new bootstrap.Toast(toastElement);
+            toast.show();
+
+            setTimeout(function() {
+                toast.hide();
+            }, 60000);
+
+        } else {
+            console.error("Invalid data structure received from Pusher:", data);
+        }
+    });
+
 </script>
 
 @yield('script')
