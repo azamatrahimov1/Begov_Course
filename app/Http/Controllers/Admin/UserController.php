@@ -21,8 +21,7 @@ class UserController extends Controller
                         ->orWhere('email', 'LIKE', '%' . request('search') . '%')
                         ->orWhere('created_at', 'LIKE', '%' . request('search') . '%')
                         ->orWhere('phone_number', 'LIKE', '%' . request('search') . '%')
-                        ->orWhere('end_date', 'LIKE', '%' . request('search') . '%')
-                        ->orWhere('status', 'LIKE', '%' . request('search') . '%');
+                        ->orWhere('end_date', 'LIKE', '%' . request('search') . '%');
                 });
             })
             ->when(request('filter') == 'expired', function ($query) {

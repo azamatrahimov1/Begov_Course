@@ -57,7 +57,7 @@
             <form action="{{ route('notification.destroy') }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="dropdown-item text-center">Barcha xabarlarni ko'rish</button>
+                <button type="submit" class="dropdown-item text-center bg-danger text-dark">Barcha xabarlarni ko'rish</button>
             </form>
         </li>
     </ul>
