@@ -5,9 +5,11 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\Admin\MainScreenController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OfflineController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OnlineController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ContactController;
@@ -57,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/gallery', GalleryController::class)->middleware('role:super-user');
     //Team
     Route::resource('/team', TeamController::class)->middleware('role:super-user');
+    //Student
+    Route::resource('/student', StudentController::class)->middleware('role:super-user');
 
     //Lessons
     Route::get('/lessons/create', [LessonController::class, 'index'])->name('lessons.index')->middleware('can:show-grammar-lessons');
@@ -72,6 +76,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('can:show-grammar-lessons');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('can:show-grammar-lessons');
 
+    Route::delete('/notifications', [NotificationController::class, 'destroy'])->name('notification.destroy');
 });
 
 require __DIR__.'/auth.php';

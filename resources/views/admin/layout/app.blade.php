@@ -158,8 +158,8 @@
 
 <!-- Pusher Notification -->
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script>
-
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('05beb96fd0f4c0e32cec', {
@@ -177,18 +177,15 @@
             toastTitle.textContent = data.message.full_name;
             toastBody.textContent = data.message.desc;
 
-            var toast = new bootstrap.Toast(toastElement);
+            var toast = new bootstrap.Toast(toastElement, {
+                autohide: false
+            });
             toast.show();
-
-            setTimeout(function() {
-                toast.hide();
-            }, 60000);
 
         } else {
             console.error("Invalid data structure received from Pusher:", data);
         }
     });
-
 </script>
 
 @yield('script')

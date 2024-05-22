@@ -1,16 +1,5 @@
 <!-- Layout container -->
 <div class="layout-page">
-    <!-- Toast -->
-    <div id="myToast" class="toast-time bs-toast toast fade bg-primary position-fixed top-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true" data-delay="60000">
-        <div class="toast-header">
-            <i class="bx bx-bell me-2"></i>
-            <div id="toastTitle" class="me-auto fw-semibold"></div>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div id="toastBody" class="toast-body"></div>
-    </div>
-
-
     <!-- Navbar -->
 
     <nav
@@ -26,52 +15,8 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <!-- Notification Bell -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bx bx-bell"></i>
-                        @php
-                            $unreadMessagesCount = \App\Models\Contact::where('is_read', false)->count();
-                        @endphp
-                        @if($unreadMessagesCount > 0)
-                            <span class="badge badge-danger">{{ $unreadMessagesCount }}</span>
-                        @endif
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0 me-3">
-                                        <i class="bx bx-message"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">New Message</span>
-                                        <small class="text-muted">You have a new message</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0 me-3">
-                                        <i class="bx bx-task"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">New Task</span>
-                                        <small class="text-muted">You have a new task</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-center" href="#">View All Notifications</a>
-                        </li>
-                    </ul>
-                </li>
+
+                @include('admin.notification.index')
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -82,7 +27,7 @@
                                 $logo = \App\Models\Logo::first();
                             @endphp
                             @if($logo)
-                                <img src="{{ asset('storage/' . $logo->image) }}" alt class="w-px-50 h-auto rounded-circle"/>
+                                <img src="{{ asset('storage/' . $logo->image) }}" alt class="w-px-45 h-auto rounded-circle"/>
                             @endif
                         </div>
                     </a>

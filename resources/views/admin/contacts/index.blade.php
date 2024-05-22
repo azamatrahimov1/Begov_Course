@@ -14,6 +14,7 @@
                     <th scope="col">To'liq Ism</th>
                     <th scope="col">Telefon Raqami</th>
                     <th scope="col">Tavsifi</th>
+                    <th scope="col">Sana</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -26,6 +27,7 @@
                         <td>{{$contact->full_name}}</td>
                         <td>{{$contact->phone_number}}</td>
                         <td>{{$contact->desc}}</td>
+                        <td>{{$contact->created_at}}</td>
                         <td>
                             @if(auth()->user()->can('delete'))
                                 <button type="button" class="btn btn-icon btn-danger me-2"

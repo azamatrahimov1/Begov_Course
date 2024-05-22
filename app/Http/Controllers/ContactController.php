@@ -6,7 +6,9 @@ use App\Events\MessageCreate;
 use App\Models\About;
 use App\Models\Contact;
 use App\Models\Logo;
+use App\Notifications\ContactCreated;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 
 class ContactController extends Controller
 {
@@ -27,7 +29,7 @@ class ContactController extends Controller
             'desc' => 'required',
         ]);
 
-        Contact::create($message);
+        $contact = Contact::create($message);
 
         $data = [
             'full_name' => $message['full_name'],
@@ -36,6 +38,8 @@ class ContactController extends Controller
         ];
 
         event(new MessageCreate($data));
+
+        $contact->notify(new ContactCreated($contact));
 
         return redirect()->back()->with('success', 'Sizning habaringiz muvaffaqiyatli yuborildi!');
     }
