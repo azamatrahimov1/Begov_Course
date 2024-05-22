@@ -1,5 +1,6 @@
 @role('super-user')
-<div id="myToast" class="toast-time bs-toast toast fade bg-primary position-fixed top-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true" data-delay="60000">
+<div id="myToast" class="toast-time bs-toast toast fade bg-primary position-fixed top-0 end-0 p-3" role="alert"
+     aria-live="assertive" aria-atomic="true" data-delay="60000">
     <div class="toast-header">
         <i class="bx bx-bell me-2"></i>
         <div id="toastTitle" class="me-auto fw-semibold"></div>
@@ -10,7 +11,8 @@
 
 <!-- Notification Bell -->
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle hide-arrow me-3" href="javascript:void(0)" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle hide-arrow me-3" href="javascript:void(0)" id="notificationDropdown"
+       data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bx bx-bell"></i>
         @php
             $notifications = \App\Models\Notification::whereNull('read_at')->get();
@@ -32,20 +34,20 @@
                 @endphp
                 <div class="scrollable-dropdown-content">
                     @if($notifications->count() > 0)
-                    @foreach($notifications as $notification)
-                        <div class="d-flex mb-2">
+                        @foreach($notifications as $notification)
+                            <div class="d-flex mb-2">
+                                    <div class="flex-grow-1">
+                                        <span class="fw-semibold d-block">{{ $notification->data['full_name'] }}</span>
+                                        <small class="text-muted">{{ $notification->data['desc'] }}</small>
+                                    </div>
+                            </div>
                             <div class="flex-shrink-0 me-3">
-                                <i class="bx bx-message"></i>
+                                @endforeach
+                                @else
+                                    Yangi xabar yo'q!
+                                @endif
                             </div>
-                            <div class="flex-grow-1">
-                                <span class="fw-semibold d-block">{{ $notification->data['full_name'] }}</span>
-                                <small class="text-muted">{{ $notification->data['desc'] }}</small>
-                            </div>
-                        </div>
-                    @endforeach
-                    @else
-                        Yangi xabar yo'q!
-                    @endif
+                            <i class="bx bx-message"></i>
                 </div>
             </a>
         </li>
@@ -57,7 +59,8 @@
             <form action="{{ route('notification.destroy') }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="dropdown-item text-center bg-danger text-dark">Barcha xabarlarni ko'rish</button>
+                <button type="submit" class="dropdown-item text-center bg-danger text-dark">Barcha xabarlarni ko'rish
+                </button>
             </form>
         </li>
     </ul>
