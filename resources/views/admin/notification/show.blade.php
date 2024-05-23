@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 
-    <h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light"></span> Xabarlar</h4>
+    <h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light"></span> Yangi Xabarlar</h4>
 
     @include('admin.success-alert')
 
