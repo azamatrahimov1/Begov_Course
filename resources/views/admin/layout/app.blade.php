@@ -158,7 +158,6 @@
 
 <!-- Pusher Notification -->
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script>
     Pusher.logToConsole = true;
 
