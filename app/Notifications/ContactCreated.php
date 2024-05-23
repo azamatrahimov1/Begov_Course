@@ -34,6 +34,7 @@ class ContactCreated extends Notification
         return [
             'id' => $this->contact->id,
             'full_name' => $this->contact->full_name,
+            'phone_number' => $this->contact->phone_number,
             'desc' => $this->contact->desc,
             'created_at' => $this->contact->created_at,
         ];
