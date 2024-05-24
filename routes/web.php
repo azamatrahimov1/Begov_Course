@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('can:show-grammar-lessons');
 
     Route::delete('/notifications', [NotificationController::class, 'destroy'])->name('notification.destroy');
+    Route::post('/notifications/show', [NotificationController::class, 'show'])->name('notification.show');
 });
 
 require __DIR__.'/auth.php';

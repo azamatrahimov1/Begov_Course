@@ -13,10 +13,24 @@ class NotificationController extends Controller
     {
         $notifications = DatabaseNotification::all();
 
+
+//        dd($notifications);
+
         foreach ($notifications as $notification) {
             $notification->delete();
         }
 
         return redirect()->back();
     }
+
+
+    public function show(){
+
+        $contacts = DatabaseNotification::all();
+
+        return view('admin.notification.show', compact('contacts'));
+
+    }
+
+
 }
