@@ -45,7 +45,16 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Bu hisob ma\'lumotlari bizning yozuvlarimizga mos kelmaydi.',
+            ]);
+        }
+
+        $user = Auth::user();
+
+        if ($user->end_date < now()) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'error' => 'Kirish muddati tugadi.',
             ]);
         }
 
