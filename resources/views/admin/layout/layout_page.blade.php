@@ -12,15 +12,16 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <ul class="navbar-nav flex-row align-items-center ms-auto">
                 @role('super-user')
-                <div id="myToast" class="toast-time bs-toast toast fade bg-primary position-fixed top-0 end-0 p-3"
-                     role="alert" aria-live="assertive" aria-atomic="true" data-delay="60000">
-                    <div class="toast-header">
-                        <i class="bx bx-bell me-2"></i>
-                        <div id="toastTitle" class="me-auto fw-semibold"></div>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <div id="myToast" class="toast-time bs-toast toast fade bg-primary position-fixed top-0 end-0 p-3"
+                         role="alert" aria-live="assertive" aria-atomic="true" data-delay="60000">
+                        <div class="toast-header">
+                            <i class="bx bx-bell me-2"></i>
+                            <div id="toastTitle" class="me-auto fw-semibold"></div>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div id="toastBody" class="toast-body"></div>
                     </div>
-                    <div id="toastBody" class="toast-body"></div>
-                </div>
+
 
                 <!-- Notification Bell -->
                 <li class="nav-item dropdown">
@@ -40,31 +41,30 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                @php
-                                    $notifications = \App\Models\Notification::paginate(5);
-                                @endphp
-                                <div class="scrollable-dropdown-content">
-                                    @if($notifications->count() > 0)
-                                        @foreach($notifications as $notification)
+                        @php
+                            $notifications = \App\Models\Notification::paginate(10);
+                        @endphp
+                        <div class="scrollable-dropdown-content">
+                            @if($notifications->count() > 0)
+                                @foreach($notifications as $notification)
+                                    <li>
+                                        <a class="dropdown-item" href="#">
                                             <div class="d-flex mb-2">
-                                                <div class="flex-grow-1">
-                                                    <span
-                                                        class="fw-semibold d-block">{{ $notification->data['full_name'] }}</span>
+                                                <div class="flex-grow-1 notification-text">
+                                                    <span class="d-block fw-semibold mb-1">{{ $notification->data['full_name'] }}</span>
                                                     <small class="text-muted">{{ $notification->data['desc'] }}</small>
                                                 </div>
                                                 <div class="flex-shrink-0 me-3">
                                                     <i class="bx bx-message"></i>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @else
-                                        Yangi xabar yo'q!
-                                    @endif
-                                </div>
-                            </a>
-                        </li>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li>Yangi xabar yo'q!</li>
+                            @endif
+                        </div>
                         <li>
                             <div class="dropdown-divider"></div>
                         </li>
@@ -86,46 +86,8 @@
                                 </div>
                             </div>
                         </li>
-
                     </ul>
                 </li>
-
-                <style>
-                    .notification-container {
-                        position: relative;
-                        display: inline-block;
-                    }
-
-                    .notification-container .count {
-                        position: absolute;
-                        top: -25px;
-                        right: -10px;
-                        background-color: red;
-                        color: white;
-                        border-radius: 50%;
-                        padding: 3px 8px;
-                        font-size: 10px;
-                    }
-
-                    .scrollable-dropdown-content {
-                        max-height: 100px;
-                        overflow-y: auto;
-                        padding-right: 10px;
-                    }
-
-                    .scrollable-dropdown-content::-webkit-scrollbar {
-                        width: 4px;
-                    }
-
-                    .scrollable-dropdown-content::-webkit-scrollbar-thumb {
-                        background-color: rgba(0, 0, 0, 0.2);
-                        border-radius: 10px;
-                    }
-
-                    .scrollable-dropdown-content::-webkit-scrollbar-thumb:hover {
-                        background-color: rgba(0, 0, 0, 0.4);
-                    }
-                </style>
                 @endrole
 
                 <!-- User -->
@@ -188,3 +150,46 @@
     </div>
 </div>
 <!-- / Layout page -->
+
+<style>
+    .notification-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .notification-container .count {
+        position: absolute;
+        top: -25px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+
+    .scrollable-dropdown-content {
+        max-height: 150px; /* Увеличил высоту */
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+
+    .scrollable-dropdown-content::-webkit-scrollbar {
+        width: 7px; /* Увеличил ширину */
+    }
+
+    .scrollable-dropdown-content::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+
+    .scrollable-dropdown-content::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .notification-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
