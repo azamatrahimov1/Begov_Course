@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\About;
 use App\Models\Chart;
 use App\Models\Logo;
+use App\Models\Offline;
+use App\Models\Online;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,6 +42,30 @@ class OthersSeeder extends Seeder
         Logo::create([
             'title' => 'English with Begov',
             'image' => 'image.png',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Online::create([
+            'title' => 'English with Begov',
+            'image' => 'image.png',
+            'desc' => 'description',
+            'price' => '250000',
+            'teacher' => 'Begov',
+            'hour' => '24',
+            'student' => '1',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Offline::create([
+            'title' => 'English with Begov',
+            'image' => 'image.png',
+            'desc' => 'description',
+            'price' => '500000',
+            'teacher' => 'Begov',
+            'hour' => '2',
+            'student' => '30',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
