@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/role', RoleController::class)->middleware('role:super-user');
     //Users
     Route::resource('/users', UserController::class)->middleware('role:super-user');
+    Route::delete('/u-expired', [UserController::class, 'expiredDestroy'])->name('users.deleteExpired')->middleware('role:super-user');
     //Gallery
     Route::resource('/gallery', GalleryController::class)->middleware('role:super-user');
     //Team

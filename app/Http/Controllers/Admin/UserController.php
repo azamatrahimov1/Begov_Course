@@ -13,8 +13,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::query()
-            ->where('name', '!=', 'Dostonbek')
-            ->orderBy('end_date')
+            ->whereNotIn('name', ['Dostonbek', 'Doston'])
+            ->orderBy('created_at')
             ->when(request('search'), function ($query) {
                 $query->where(function ($query) {
                     $query->where('name', 'LIKE', '%' . request('search') . '%')
@@ -55,7 +55,7 @@ class UserController extends Controller
 
         $user->assignRole('show-grammar-lessons');
 
-        return redirect()->route('users.index')->with('success', 'User created successfully');
+        return redirect()->route('users.index')->with('success', 'Mijoz muvaffaqiyatli yaratildi!');
     }
 
     public function edit(User $user)
@@ -81,13 +81,24 @@ class UserController extends Controller
 
         $user->syncRoles([$role->name]);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        return redirect()->route('users.index')->with('success', 'Mijoz muvaffaqiyatli yangilandi!');
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'Mijoz muvaffaqiyatli oʻchirildi!');
+    }
+
+    public function expiredDestroy()
+    {
+        $users = User::where('end_date', '<', now())->get();
+
+        foreach ($users as $user) {
+            $user->delete();
+        }
+
+        return redirect()->route('users.index')->with('success', 'Mijozlar muvaffaqiyatli oʻchirildi!');
     }
 }

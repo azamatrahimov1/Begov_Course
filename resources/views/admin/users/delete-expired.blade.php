@@ -1,12 +1,7 @@
 <form id="deleteUsersForm" action="{{ route('users.deleteExpired') }}" method="POST">
     @csrf
     @method('DELETE')
-    @foreach ($users as $user)
-        <div>
-            <input type="checkbox" name="user_ids[]" value="{{ $user->id }}">
-            {{ $user->name }}
-        </div>
-    @endforeach
+
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteExpiredModal">
         <i class="bx bx-trash"></i>
     </button>
@@ -19,7 +14,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Haqiqatan ham tanlangan foydalanuvchilarni o‘chirib tashlamoqchimisiz?
+                    Haqiqatan ham muddati tugagan mijozlarni o‘chirib tashlamoqchimisiz?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Bekor qilish</button>

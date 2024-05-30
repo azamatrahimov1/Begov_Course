@@ -72,17 +72,10 @@
                         </div>
                     </div>
                     <div class="demo-inline-spacing mb-3 d-flex">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exLargeModal">
-                            <i class="bx bx-plus"></i>
-                        </button>
-                        <form action="{{ route('users.index') }}" method="GET" class="d-inline">
-                            <input type="hidden" name="filter" value="expired">
-                            <button class="btn btn-danger" type="submit">
-                                <i class="bx bx-filter-alt"></i>
-                            </button>
-                        </form>
-{{--                        @include('admin.users.delete-expired')--}}
+                        @include('admin.users.filter-expired')
+                        @include('admin.users.delete-expired')
                     </div>
+
 
                 </div>
                 <div class="col-md-6">
