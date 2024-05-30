@@ -27,21 +27,21 @@
                 </div>
                 <div class="mb-3">
                     <label for="teacher" class="form-label">O'qituvchi</label>
-                    <input type="text" class="form-control" name="teacher" value="{{ old('teacher', $online->teacher) }}">
+                    <input type="text" class="form-control" name="teacher" value="{{ old('teacher', $offline->teacher) }}">
                     @error('teacher')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="student" class="form-label">O'quvchi soni</label>
-                    <input type="text" class="form-control" name="student" value="{{ old('student', $online->student) }}">
+                    <input type="text" class="form-control" name="student" value="{{ old('student', $offline->student) }}">
                     @error('student')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="hour" class="form-label">Dars Vaqti</label>
-                    <input type="text" class="form-control" name="hour" value="{{ old('hour', $online->hour) }}">
+                    <input type="text" class="form-control" name="hour" value="{{ old('hour', $offline->hour) }}">
                     @error('hour')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
