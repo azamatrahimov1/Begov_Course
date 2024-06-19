@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "3.0",
         "munafio/chatify": "^1.6",
+        "php-ffmpeg/php-ffmpeg": "^1.2",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-permission": "^6.3",
         "stripe/stripe-php": "^13.9",

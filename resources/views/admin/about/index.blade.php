@@ -49,39 +49,6 @@
                                        class="btn btn-icon btn-warning me-2"><i class="bx bx-pencil"></i></a>
                                 @endif
 
-                                @if(auth()->user()->can('delete'))
-                                    <button type="button" class="btn btn-icon btn-danger me-2"
-                                            data-bs-toggle="modal" data-bs-target="#modalToggle{{$about->id}}">
-                                        <i class="bx bx-trash-alt"></i></button>
-
-                                    <div class="modal fade" id="modalToggle{{$about->id}}"
-                                         aria-labelledby="modalToggleLabel{{$about->id}}" tabindex="-1"
-                                         style="display: none" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalToggleLabel{{$about->id}}">
-                                                        Buni qaytara olmaysiz!</h5>
-                                                    <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">{{ $about->address }}</div>
-                                                <div class="modal-footer">
-                                                    <form action="{{ route('abouts.destroy', $about->id) }}"
-                                                          method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">O'chirish
-                                                        </button>
-                                                    </form>
-                                                    <button class="btn btn-outline-secondary"
-                                                            data-bs-dismiss="modal">Ortga
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </td>
                     </tr>

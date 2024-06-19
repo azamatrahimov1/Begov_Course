@@ -82,7 +82,7 @@ class RegisteredUserController extends Controller
 
             return redirect(RouteServiceProvider::HOME);
         } else {
-            return redirect()->back()->with('error', 'Ошибка при проведении платежа');
+            return redirect()->back()->with('error', 'To\'lovni amalga oshirishda xato');
         }
     }
 }

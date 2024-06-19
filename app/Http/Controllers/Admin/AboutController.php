@@ -45,29 +45,4 @@ class AboutController extends Controller
         return redirect()->route('abouts.index')->with('success', 'About updated successfully!');
     }
 
-    public function destroy(About $about, DOMDocumentService $docService)
-    {
-        try {
-            $about = About::find($about->id);
-
-            if (!$about) {
-                return redirect()->route('abouts.index')->with('error', 'About not found.');
-            }
-
-            if (!empty($about->desc)) {
-                $docService->delete($about->desc);
-            }
-
-            if ($about->video) {
-                UploadFileService::deleteFile($about->video);
-            }
-
-            $about->delete();
-
-            return redirect()->route('abouts.index')->with('success', 'About deleted successfully!');
-        } catch (\Exception $e) {
-            return redirect()->route('abouts.index')->with('error', 'Error deleting about: ' . $e->getMessage());
-        }
-    }
-
 }
