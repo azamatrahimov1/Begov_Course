@@ -70,8 +70,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/lessons/{lesson}/edit', [LessonController::class, 'edit'])->name('lessons.edit')->middleware('can:edit');
     Route::put('/lessons/{lesson}', [LessonController::class, 'update'])->name('lessons.update')->middleware('can:edit');
     Route::delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->name('lessons.destroy')->middleware('can:delete');
-    Route::post('like/{lesson}/like', [LessonController::class, 'like'])->name('lessons.like');
-    Route::post('like/{lesson}/unlike', [LessonController::class, 'unlike'])->name('lessons.unlike');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('can:show-grammar-lessons');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('can:show-grammar-lessons');

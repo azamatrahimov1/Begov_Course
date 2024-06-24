@@ -187,24 +187,4 @@ class LessonController extends Controller
         }
     }
 
-
-
-    public function like(Lesson $lesson)
-    {
-        $liker = auth()->user();
-
-        $liker->likes()->attach($lesson);
-
-        return redirect()->route('lessons.index');
-    }
-
-    public function unlike(Lesson $lesson)
-    {
-        $liker = auth()->user();
-
-        $liker->likes()->detach($lesson);
-
-        return redirect()->route('lessons.index');
-    }
-
 }
